@@ -10,12 +10,12 @@ const instance = axios.create({
 export let api = { // объект с методами api для USERS и follow/unfollow
     getBestChangeData: async () => {// получить данные bestChange с сервера
         const response = await instance.get()
-        const convert = require("xml-js");
-        const data = JSON.parse(
-            convert.xml2json(response.data, { compact: true, spaces: 2 })
-        );
-        console.log(data.rates)
-        return (data.rates) //возврат данных из поля data
+        const parseString = require('xml2js').parseString;
+        let result1;
+        parseString(response.data, function (err, result) {
+            result1=result.rates
+        });
+        return (result1) //возврат данных из поля data
     },
 }
 

@@ -32,6 +32,7 @@ export let getBestChangeDataTC = () => {//санкреатор получени�
   return async (dispatch: any) => { // санка получения данных из внешнего источника
     const response1 = await api.getBestChangeData()  //получить данные из внешнего источника
     if (response1) {
+      console.log(response1)
       dispatch(setBestChangeData(response1))  //записать считаное из localStorage значение темы в store
     }
 
