@@ -9,14 +9,14 @@ import Container from "react-bootstrap/Container";
 
 class App extends React.Component { // конвертируем app в классовую компоненту для жизненного цикла
     componentDidMount() {
-        //this.props.initialisedAppThunkCreator() // запускаем инициализацию приложения
+        this.props.initialisedAppThunkCreator() // запускаем инициализацию приложения
     }
 
     render() {
 
-/*        if (!this.props.initialisedApp) { // если приложение еще не инициализировано
+        if (!this.props.initialisedApp) { // если приложение еще не инициализировано
             return <Preloader/> // показать статус загрузки
-        }*/
+        }
         return ( // иначе показать все приложение
             <div>
                 <HashRouter> {/*BrowserRouter для продакшн, HashRouter для gh-pages*/}
@@ -27,15 +27,13 @@ class App extends React.Component { // конвертируем app в клас�
                     </ErrorBoundary>
                 </HashRouter>
             </div>
-
-
         );
     }
 }
 
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state: any) => {
     return {
-        initialisedApp: true,// state.app.initialisedApp, // флаг инициализации приложения
+        initialisedApp: state.app.initialisedApp, // флаг инициализации приложения
     }
 }
 
