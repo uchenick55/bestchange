@@ -1,31 +1,30 @@
-import {myObjectType} from "../Types/commonTypes";
+import {myObjectType, responseType} from "../Types/commonTypes";
 
 type myResultType = {
     rates: { // верхний объект rates
-        item: Array<object> // свойсво item является массивом объектов
+        item: Array<myObjectType> // свойсво item является массивом объектов
     }
 }
 
-export const EditDataFromServer = (response:any ) => {
+export const EditDataFromServer = (response: responseType) => {
     const convert = require("xml-js"); // преобразуем в json
-    const data:myResultType = JSON.parse(
+    const data: myResultType = JSON.parse(
         convert.xml2json(response.data, {compact: true, spaces: 2})
     );
 // в полученом JSON есть лишние вложеные подобъеты, значения полей неудобно доставать - убираем их
-    let response2: Array<object> = [] // массив в который будем собирать данные
-    data.rates.item.forEach((r:object) => { // пробегаем по всем парам
-        const myObject: myObjectType | {} = {}; // объект, в который собираем все элементы пары без лишних подобъектов
-        Object.keys(r).forEach((o, index2)=>{ // пробегаем по элементам пары
+    let response2: Array<myObjectType> = [] // массив в который будем собирать данные
+    data.rates.item.forEach((r: object) => { // пробегаем по всем парам
+        const myObject: any = {}; // объект, в который собираем все элементы пары без лишних подобъектов
+        Object.keys(r).forEach((o, index2) => { // пробегаем по элементам пары
             const myKey = o // ключ без изменений
             const myValue = Object.values(r)[index2]._text // значение вытягиваем из подобъекта
             if (myKey && myValue) { // если и ключ и значение существуют
-                // @ts-ignore
-                myObject[myKey]=myValue // добавляем в промежуточный подобъект
+                myObject[myKey] = myValue // добавляем в промежуточный подобъект
             }
         })
         if (myObject) { // если объект существует
             response2.push(myObject) // пушим его в результирующий массив
         }
     })
-    return response2 // ретурним маассив в удобной нам форме без подобъектов в каждом поле
+    return response // ретурним маассив в удобной нам форме без подобъектов в каждом поле
 }

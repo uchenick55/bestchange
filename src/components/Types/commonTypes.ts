@@ -1,3 +1,12 @@
+export type responseType = {
+    config: object
+    data: string
+    headers: object
+    request: object
+    status: number
+    statusText: string
+}
+
 export type myObjectType = {
     from: string // какую валюту нужно отдать для обмена
     to: string  // какую валюту получаем при обмене
