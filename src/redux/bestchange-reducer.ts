@@ -1,5 +1,5 @@
 import {api} from "../components/api/api";
-import {myObjectType} from "../components/Types/commonTypes";
+import {PairType} from "../components/Types/commonTypes";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 
@@ -11,9 +11,24 @@ export let setBestChangeData = (bestChangeData: any): setBestChangeDataActionTyp
 type bestChangeDataType = {}
 type initialStateType = {
     bestChangeData: any
+    MyPairData: PairType
+
 }
 let initialState: initialStateType = { //стейт по умолчанию темы
     bestChangeData: null, // тема в bll по умолчанию
+    MyPairData: {
+        from: "", // какую валюту нужно отдать для обмена
+        to: "",  // какую валюту получаем при обмене
+        maxamount: 0, // максимальное количество валюты отдаем (за раз)
+        minamount: 0, // минимальное количество валюты отдаем (за раз)
+        in: 0, // сколько отдаем валюты для обмена (для расчета курса)
+        out: 0, // сколько получаем валюты (для расчета курса)
+        fromfee: 0, // комиссия от входящего депозита
+        tofee: 0, // комиссия от полученой валюты, вычитается после обмена
+        amount: 0, // максимальное количество валюты при получении
+        param: "", // всегда manual
+
+    }
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер задания темы

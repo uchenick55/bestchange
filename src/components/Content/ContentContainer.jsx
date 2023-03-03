@@ -1,10 +1,10 @@
 import React, {Suspense} from "react";
 import {Route, Routes} from "react-router-dom";
 import ErrorBoundary from "../common/ErrorBoundary/ErrorBoundary";
-//import Home from "../Home/Home";
+//import Calculator from "../Calculator/Calculator";
 import classes from "./ContentContainer.module.css"
 
-const Home = React.lazy(() => import("../Home/Home"))
+const Home = React.lazy(() => import("../Calculator/Calculator"))
 
 const ContentContainer = () => { // вынес роутинг контента в отдельную компоненту
     return (<div>

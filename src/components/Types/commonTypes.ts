@@ -7,7 +7,7 @@ export type responseType = {
     statusText: string
 }
 
-export type myObjectType = {
+export type PairType = {
     from: string // какую валюту нужно отдать для обмена
     to: string  // какую валюту получаем при обмене
     maxamount: number // максимальное количество валюты отдаем (за раз)
