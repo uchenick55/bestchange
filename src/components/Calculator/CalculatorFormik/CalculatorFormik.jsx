@@ -5,6 +5,7 @@ import DisplayFormikState from "../../common/formikCommon/DisplayFormikState"
 import {MySelect, MyTextInput} from "../../common/formikCommon/MyFieldsBS"
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
+import {PairType} from "../../Types/commonTypes";
 
 let myInitialValues = { // начальные зачения форм
     Currency1: "",
@@ -14,9 +15,9 @@ let myInitialValues = { // начальные зачения форм
 
 }
 
-const CalculatorFormik = ({sendFeedBack}) => { // основная компонента с входным колбэком, чтобы забрать данные с форм
+const CalculatorFormik = ({MyPairData}) => { // основная компонента с входным колбэком, чтобы забрать данные с форм
     const myOnSubmit = (values, {resetForm}) => { // действия по сабмиту
-        sendFeedBack(values) // колбек, который принмает результат ввода формы
+        // sendFeedBack(values)  колбек, который принмает результат ввода формы
         resetForm()// сбросить значение формы после ввода
     }
 
@@ -24,9 +25,9 @@ const CalculatorFormik = ({sendFeedBack}) => { // основная компон�
     let myValidationSchema = Yup.object({ // валидация форм на required, длину и заполнение полей
         Qty1: Yup.number()
             .typeError('Вводить можно только числа')
-            .min(0, 'Минимальное значение 0')// Minamount
+            .min(MyPairData.MINAMOUNT, `Минимальное значение ${MyPairData.MINAMOUNT}`)// minamount - минимальное входное значение
             .required('Required')
-            .max(10000000000000000000000000000000, 'Не более 10000000000000000000000000000000') // Maxamount
+            .max(MyPairData.MAXAMOUNT, `Не более ${MyPairData.MAXAMOUNT}`) // maxamount - максимальное количество входной пары
         ,
         Qty2: Yup.number()
             .typeError('Вводить можно только числа')

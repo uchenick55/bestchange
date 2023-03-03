@@ -16,10 +16,14 @@ export const EditDataFromServer = (response: responseType) => {
     data.rates.item.forEach((r: object) => { // пробегаем по всем парам
         const myObject: any = {}; // объект, в который собираем все элементы пары без лишних подобъектов
         Object.keys(r).forEach((o, index2) => { // пробегаем по элементам пары
-            const myKey = o // ключ без изменений
+            const myKey = o.toUpperCase() // ключ в верхнем регистре
             const myValue = Object.values(r)[index2]._text // значение вытягиваем из подобъекта
+            if (!isNaN(myValue)) { // если значение не является строкой
+                myObject[myKey] = Number(myValue) // добавляем в промежуточный подобъект поле с числом
+                return // пропускаем дальнейшее выполенеие для данного прохода
+            }
             if (myKey && myValue) { // если и ключ и значение существуют
-                myObject[myKey] = myValue // добавляем в промежуточный подобъект
+                myObject[myKey] = myValue // добавляем в промежуточный подобъект поле со строкой
             }
         })
         if (myObject) { // если объект существует

@@ -9,7 +9,7 @@ const Calculator = ({MyPairData}) => {
     const home = <div>
         <Container>
             <h2 className={commonClasses.pageHeader}>Home</h2>
-            <CalculatorFormik/>
+            <CalculatorFormik MyPairData={MyPairData}/>
         </Container>
     </div>
 
