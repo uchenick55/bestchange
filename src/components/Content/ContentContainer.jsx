@@ -6,7 +6,7 @@ import classes from "./ContentContainer.module.css"
 
 const Home = React.lazy(() => import("../Home/Home"))
 
-let ContentContainer = () => { // вынес роутинг контента в отдельную компоненту
+const ContentContainer = () => { // вынес роутинг контента в отдельную компоненту
     return (<div>
         <ErrorBoundary> {/*Локальный обработчик ошибок ContentContainer*/}
             <Suspense fallback={

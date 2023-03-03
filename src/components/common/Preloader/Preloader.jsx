@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Preloader.module.css"
 
-let Preloader = () => {
+const Preloader = () => {
    return <div >
             <div className={classes.spinner}></div>
        </div>

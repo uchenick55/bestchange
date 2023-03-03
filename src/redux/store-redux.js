@@ -4,7 +4,7 @@ import appReducer from "./app-reducer";
 import bestChangeReducer from "./bestchange-reducer";
 
 
-let reducers = combineReducers({ // объединяем стейт редьюсеров в один объект store
+const reducers = combineReducers({ // объединяем стейт редьюсеров в один объект store
     app: appReducer, // стейт инициализации приложения
     bestChange: bestChangeReducer, // стейт данных с сервера
 });

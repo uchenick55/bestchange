@@ -1,4 +1,5 @@
 import {api} from "../components/api/api";
+import {myObjectType} from "../components/Types/commonTypes";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 
@@ -30,34 +31,12 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
     }
 }
 
-const editDataFromServer = (response1:any ) => {
-
-    let response2: Array<object> = [] // массив в который будем собирать данные
-    response1.forEach((r:object) => { // пробегаем по всем парам
-        let myObject: object = []; // объект, в который собираем все элементы пары без лишних подобъектов
-        Object.keys(r).forEach((o, index2)=>{ // пробегаем по элементам пары
-            let myKey = o // ключ без изменений
-            let myValue = Object.values(r)[index2]._text // значение вытягиваем из подобъекта
-            if (myKey && myValue) { // если и ключ и значение существуют
-                // @ts-ignore
-                myObject[myKey]=myValue // добавляем в промежуточный подобъект
-            }
-        })
-        if (myObject) { // если объект существует
-            response2.push(myObject) // пушим его в результирующий массив
-        }
-    })
-    return response2 // ретурним маассив в удобной нам форме без подобъектов в каждом поле
-}
-
 export let getBestChangeDataTC = () => {//санкреатор получения данных из внешнего источника
     return async (dispatch: any) => { // санка получения данных из внешнего источника
-        const response1 = await api.getBestChangeData()  //получить данные из внешнего источника
-        if (response1) {
-            const response2 = editDataFromServer(response1)
+        const response2 = await api.getBestChangeData()  //получить данные из внешнего источника
+        if (response2) {// если они не пустые
             dispatch(setBestChangeData(response2))  //записать считаное из localStorage значение темы в store
         }
-
     }
 }
 
