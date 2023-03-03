@@ -31,14 +31,12 @@ let bestChangeReducer = (state:initialStateType = initialState, action:any):init
 export let getBestChangeDataTC = () => {//санкреатор получения данных из внешнего источника
   return async (dispatch: any) => { // санка получения данных из внешнего источника
     const response1 = await api.getBestChangeData()  //получить данные из внешнего источника
-    console.log(response1)
     if (response1) {
       dispatch(setBestChangeData(response1))  //записать считаное из localStorage значение темы в store
     }
 
   }
 }
-
 
 export default bestChangeReducer;
 
