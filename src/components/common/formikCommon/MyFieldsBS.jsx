@@ -58,7 +58,9 @@ export const MySelect = ({label, ...props}) => {
     return (
         <div>
             <label htmlFor={props.id || props.name}>{label}</label> {/*заголовок select*/}
-            <select {...field} {...props}/>{/* вывод select с option*/}
+
+            <Form.Select {...field} {...props}/>{/* вывод select с option - оформление бутстрап-реакт*/}
+
             {meta.touched && meta.error && // поле тронуто и есть ошибка
             <div className={classes.errorText}>{meta.error}</div>} {/*вывод текста ошибки*/}
         </div>
