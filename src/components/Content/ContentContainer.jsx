@@ -4,7 +4,7 @@ import ErrorBoundary from "../common/ErrorBoundary/ErrorBoundary";
 //import Calculator from "../Calculator/Calculator";
 import classes from "./ContentContainer.module.css"
 
-const Home = React.lazy(() => import("../Calculator/Calculator"))
+const Home = React.lazy(() => import("../Calculator/CalculatorContainer"))
 
 const ContentContainer = () => { // вынес роутинг контента в отдельную компоненту
     return (<div>

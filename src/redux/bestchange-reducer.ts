@@ -73,28 +73,28 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
             }
-            console.log(stateCopy.selectValue1)
+            console.log("selectValue1:", stateCopy.selectValue1)
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE2: // кейс задания данных в стейт со второго селекта
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue2: action.selectValue2, // задание валюты с  первого селекта
             }
-            console.log(stateCopy.selectValue2)
+            console.log("selectValue2:", stateCopy.selectValue2)
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY1: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
                 Qty1: action.Qty1, // задание количества валюты с первого поля
             }
-            console.log(stateCopy.Qty1)
+            console.log("Qty1:", stateCopy.Qty1)
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY2: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
                 Qty2: action.Qty2, // задание количества валюты с первого поля
             }
-            console.log(stateCopy.Qty2)
+            console.log("Qty2:",stateCopy.Qty2)
             return stateCopy; // возврат копии стейта после изменения
         default:
             return state; // по умолчанию стейт возврашается неизмененным
