@@ -9,7 +9,7 @@ type CalculatorType = {
     Qty2: number
     setQty1AC: (Qty1: number) => void
     setQty2AC: (Qty2: number) => void
-    selectValue1AC: (selectValue1: string) => void,
+    setSelectValue1: (selectValue1: string) => void,
     setSelectValue2: (selectValue2: string) => void,
     MyPairData: PairType
     Range1: Array<string> // диапазон значений для селекта 1
@@ -17,12 +17,12 @@ type CalculatorType = {
 }
 let Calculator: React.FC<CalculatorType> = ({
                                                 selectValue1, selectValue2, Qty1, Qty2,
-                                                setQty1AC, setQty2AC, selectValue1AC,
+                                                setQty1AC, setQty2AC, setSelectValue1,
                                                 setSelectValue2, MyPairData, Range1, Range2
                                             }) => {
     return <div>
         <select onChange={(e) => {
-            selectValue1AC(e.currentTarget.value)
+            setSelectValue1(e.currentTarget.value)
         }}>
             {Range1.map(r=>{
                 return <option key={r}>{r}</option> // вывод первого селекта из Range1

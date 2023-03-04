@@ -82,8 +82,7 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
-                // нужно задать новые данные MyPairData в соответствии с новой парой валют
-
+                //после изменения пары записать новые  диапазоны селектов Range1 и Range2
             }
             console.log("selectValue1:", stateCopy.selectValue1)
             return stateCopy; // возврат копии стейта после изменения
@@ -91,8 +90,6 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue2: action.selectValue2, // задание валюты с  первого селекта
-                // нужно подгружать новые данные MyPairData в соответствии с новой парой валют
-
             }
             console.log("selectValue2:", stateCopy.selectValue2)
             return stateCopy; // возврат копии стейта после изменения

@@ -30,10 +30,15 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                                                   Range1, Range2,setMyPairDataAC
                                                 }) => {
 
+    const setSelectValue1=(selectValue1: string)=>{
+        selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
+        const TOLocal:string = MyPairData.TO// берем из стейта вторую пару
+        setMyPairDataAC(selectValue1, TOLocal)
+    }
     const setSelectValue2=(selectValue2: string)=>{
-        selectValue2AC(selectValue2) // меняем данные пары в стейте
-        const FROMLocal:string = MyPairData.FROM
-        setMyPairDataAC(FROMLocal,selectValue2)
+        selectValue2AC(selectValue2) // задаем в стейте измененное значение второй пары
+        const FROMLocal:string = MyPairData.FROM// берем из стейта первую пару
+        setMyPairDataAC(FROMLocal,selectValue2) // устанавливаем все значения новой пары
     }
 
     const home = <div>
@@ -42,7 +47,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
           {/*  <CalculatorFormik MyPairData={MyPairData}/>*/}
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
-                setQty1AC={setQty1AC} setQty2AC={setQty2AC} selectValue1AC={selectValue1AC}
+                setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
             />
         </Container>
