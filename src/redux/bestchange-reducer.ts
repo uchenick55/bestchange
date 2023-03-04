@@ -38,6 +38,7 @@ type initialStateType = {
     Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
+    Range2: Array<string> // диапазон значений для селекта 2
 
 }
 let initialState: initialStateType = { //стейт по умолчанию
@@ -58,7 +59,8 @@ let initialState: initialStateType = { //стейт по умолчанию
     selectValue2: "",// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: 0, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: 0,// значение поля валюты 2 - при его вводе вычисляется Qty1
-    Range1:[]
+    Range1:[],// диапазон валют для селекта 1
+    Range2:[],// диапазон валют для селекта 2
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
@@ -79,11 +81,6 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
-                // @ts-ignore
-/*                state.bestChangeData?.forEach((b, index, Array) => {
-                    return b
-                })*/
-
             }
             console.log("selectValue1:", stateCopy.selectValue1)
             return stateCopy; // возврат копии стейта после изменения
