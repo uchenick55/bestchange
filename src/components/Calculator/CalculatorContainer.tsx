@@ -14,7 +14,7 @@ import {
     setRangesAC
 } from "../../redux/bestchange-reducer";
 import Calculator from "./Calculator";
-import {CalculatorSelectorsSimple} from "./calculator-selectors";
+import {CalculatorSelectorsSimple, getRange1Reselect, getRange2Reselect} from "./calculator-selectors";
 
 export type CalculatorType = {
     MyPairData: PairType // только на чтение изнутри калькулятора
@@ -78,8 +78,8 @@ const mapStateToProps = (state:any) => {
         selectValue2: state.bestChange.selectValue2,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
         Qty1: state.bestChange.Qty1, // значение поля валюты 1 - при его вводе вычисляется Qty2
         Qty2: state.bestChange.Qty2, // значение поля валюты 2 - при его вводе вычисляется Qty1
-        Range1: CalculatorSelectorsSimple.getRange1(state), // диапазон валют для первого селекта
-        Range2: CalculatorSelectorsSimple.getRange2(state), // диапазон валют для второго селекта
+        Range1: getRange1Reselect(state), // диапазон валют для первого селекта
+        Range2: getRange2Reselect(state), // диапазон валют для второго селекта
     }
 }
 

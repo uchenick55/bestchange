@@ -1,3 +1,4 @@
+import {createSelector} from "reselect";
 
 export const CalculatorSelectorsSimple = { // простые селекторы из стейта
     getRange1: (state) => {
@@ -24,3 +25,10 @@ export const CalculatorSelectorsSimple = { // простые селекторы 
         return state.bestChange.MyPairData
     }
 }
+
+export let getRange1Reselect = createSelector(CalculatorSelectorsSimple.getRange1, (RangeLocal) => {
+    return RangeLocal // мемоизация данных фильтрации для первого диапазона валют
+})
+export let getRange2Reselect = createSelector(CalculatorSelectorsSimple.getRange2, (RangeLocal) => {
+    return RangeLocal // мемоизация данных фильтрации для второго диапазона валют
+})
