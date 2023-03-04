@@ -5,7 +5,7 @@ import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
 import CalculatorFormik from "./CalculatorFormik/CalculatorFormik";
 import {PairType} from "../Types/commonTypes";
-import {selectValue1AC, selectValue2AC, setQty1AC, setQty2AC} from "../../redux/bestchange-reducer";
+import {selectValue1AC, selectValue2AC, setMyPairDataAC, setQty1AC, setQty2AC} from "../../redux/bestchange-reducer";
 import Calculator from "./Calculator";
 import {CalculatorSelectorsSimple} from "./calculator-selectors";
 
@@ -17,17 +17,24 @@ export type CalculatorType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-    selectValue1AC: (selectValue1: string) => void,
-    selectValue2AC: (selectValue2: string) => void,
-    setQty1AC: (Qty1: number) => void,
-    setQty2AC: (Qty2: number) => void,
+    selectValue1AC: (selectValue1: string) => void,// задание значения из первого списка валют
+    selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
+    setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
+    setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
+    setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
 
 }
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
                                                   selectValue2, Qty1, Qty2,
                                                   selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
-                                                  Range1, Range2
+                                                  Range1, Range2,setMyPairDataAC
                                                 }) => {
+
+    const setSelectValue2=(selectValue2: string)=>{
+        selectValue2AC(selectValue2) // меняем данные пары в стейте
+        const FROMLocal:string = MyPairData.FROM
+        setMyPairDataAC(FROMLocal,selectValue2)
+    }
 
     const home = <div>
         <Container>
@@ -36,7 +43,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} selectValue1AC={selectValue1AC}
-                selectValue2AC={selectValue2AC} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
+                setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
             />
         </Container>
     </div>
@@ -47,7 +54,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
 }
 const mapStateToProps = (state:any) => {
     return {
-        MyPairData: state.bestChange.MyPairData,// данные выбраной пары
+        MyPairData: CalculatorSelectorsSimple.MyPairData(state),// данные выбраной пары
         selectValue1: state.bestChange.selectValue1, // значение селекта 1 (валюты 1) (на его основе фильтруется bestChangeData и получаем MyPairData)
         selectValue2: state.bestChange.selectValue2,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
         Qty1: state.bestChange.Qty1, // значение поля валюты 1 - при его вводе вычисляется Qty2
@@ -58,6 +65,6 @@ const mapStateToProps = (state:any) => {
 }
 
 export default connect(mapStateToProps, {
-    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC
+    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC
 })(CalculatorContainer)
 
