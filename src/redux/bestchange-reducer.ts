@@ -1,6 +1,7 @@
 import {api} from "../components/api/api";
 import {PairType} from "../components/Types/commonTypes";
 import {apiCommon} from "../components/api/apiLocalStorage";
+import {CalculatorSelectorsSimple} from "../components/Calculator/calculator-selectors";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 const SET_SELECTVALUE1 = "myApp/bestChangeReducer/SET_SELECTVALUE1"; //константа задания данных с первого селекта
@@ -8,6 +9,7 @@ const SET_SELECTVALUE2 = "myApp/bestChangeReducer/SET_SELECTVALUE2"; //конс�
 const SET_QTY1 = "myApp/bestChangeReducer/SET_QTY1"; //константа задания количества первой валюты
 const SET_QTY2 = "myApp/bestChangeReducer/SET_QTY2"; //константа задания количества второй валюты
 const SET_MY_PAIR_DATA = "myApp/bestChangeReducer/SET_MY_PAIR_DATA"; //константа задания новой пары вавлют с данными
+const SET_RANGES = "myApp/bestChangeReducer/SET_RANGES"; //константа задания Range1 и Range2 после селектора
 
 type setBestChangeDataActionType = { type: typeof SET_BEST_CHANGE_DATA, bestChangeData: any }
 export let setBestChangeData = (bestChangeData: any): setBestChangeDataActionType => { // экшн задания данных с сервера
@@ -32,6 +34,10 @@ export let setQty2AC = (Qty2: number): Qty2ActionType => { // экшн полу�
 type setMyPairDataActionType = { type: typeof SET_MY_PAIR_DATA, selectValue1: string, selectValue2:string }
 export let setMyPairDataAC = (selectValue1: string, selectValue2:string): setMyPairDataActionType => { // экшн задания данных с сервера
     return {type: SET_MY_PAIR_DATA, selectValue1, selectValue2}
+};
+type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Range2: Array<string>}
+export let setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
+    return {type: SET_RANGES, Range1, Range2}
 };
 
 type bestChangeDataType = {}
@@ -75,37 +81,32 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 bestChangeData: action.bestChangeData, // задание всех данных с сервера в стейт
-                MyPairData: action.bestChangeData[0] // задание первлй прары из списка в начальные значения
+                MyPairData: action.bestChangeData[0], // задание первлй прары из списка в начальные значения
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE1: // кейс задания данных в стейт с первого селекта
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
-                //после изменения пары записать новые  диапазоны селектов Range1 и Range2
             }
-            console.log("selectValue1:", stateCopy.selectValue1)
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE2: // кейс задания данных в стейт со второго селекта
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue2: action.selectValue2, // задание валюты с  первого селекта
             }
-            console.log("selectValue2:", stateCopy.selectValue2)
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY1: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
                 Qty1: action.Qty1, // задание количества валюты с первого поля
             }
-            console.log("Qty1:", stateCopy.Qty1)
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY2: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
-                Qty2: action.Qty2, // задание количества валюты с первого поля
+                Qty2: action.Qty2, // задание количества валюты со второго поля
             }
-            console.log("Qty2:",stateCopy.Qty2)
             return stateCopy; // возврат копии стейта после изменения
         case SET_MY_PAIR_DATA: // кейс задания новой пары с данными
 
@@ -118,7 +119,14 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
                 }
             })
             return stateCopy; // возврат копии стейта после изменения
-        default:
+        case SET_RANGES: // кейс задания диапазонов селектов Range1 и Range2
+            stateCopy = {
+                ...state, // копия всего стейта
+                Range1: action.Range1, // задание первого диапазона валют
+                Range2: action.Range2, // задание второго диапазона валют
+            }
+            return stateCopy; // возврат копии стейта после изменения
+      default:
             return state; // по умолчанию стейт возврашается неизмененным
     }
 }

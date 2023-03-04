@@ -5,7 +5,14 @@ import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
 import CalculatorFormik from "./CalculatorFormik/CalculatorFormik";
 import {PairType} from "../Types/commonTypes";
-import {selectValue1AC, selectValue2AC, setMyPairDataAC, setQty1AC, setQty2AC} from "../../redux/bestchange-reducer";
+import {
+    selectValue1AC,
+    selectValue2AC,
+    setMyPairDataAC,
+    setQty1AC,
+    setQty2AC,
+    setRangesAC
+} from "../../redux/bestchange-reducer";
 import Calculator from "./Calculator";
 import {CalculatorSelectorsSimple} from "./calculator-selectors";
 
@@ -22,13 +29,20 @@ export type CalculatorType = {
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
     setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
     setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
+    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void,
 
 }
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
                                                   selectValue2, Qty1, Qty2,
                                                   selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
-                                                  Range1, Range2,setMyPairDataAC
+                                                  Range1, Range2,setMyPairDataAC, setRangesAC
                                                 }) => {
+
+    useEffect(()=>{
+        setRangesAC(Range1, Range2) // записываем диапазоны валют в стейт при изменении пары валют
+      console.log("useEffect")
+        // записать в стейт Range1 и Range2
+    },[selectValue1, selectValue2])
 
     const setSelectValue1=(selectValue1: string)=>{
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
@@ -70,6 +84,6 @@ const mapStateToProps = (state:any) => {
 }
 
 export default connect(mapStateToProps, {
-    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC
+    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC, setRangesAC
 })(CalculatorContainer)
 

@@ -1,7 +1,6 @@
 import React from "react";
 import {PairType} from "../Types/commonTypes";
 
-
 type CalculatorType = {
     selectValue1: string
     selectValue2: string
