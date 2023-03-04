@@ -31,11 +31,11 @@ type Qty2ActionType = { type: typeof SET_QTY2, Qty2: number }
 export let setQty2AC = (Qty2: number): Qty2ActionType => { // экшн получение данных с поля валюты 2
     return {type: SET_QTY2, Qty2}
 };
-type setMyPairDataActionType = { type: typeof SET_MY_PAIR_DATA, selectValue1: string, selectValue2:string }
-export let setMyPairDataAC = (selectValue1: string, selectValue2:string): setMyPairDataActionType => { // экшн задания данных с сервера
+type setMyPairDataActionType = { type: typeof SET_MY_PAIR_DATA, selectValue1: string, selectValue2: string }
+export let setMyPairDataAC = (selectValue1: string, selectValue2: string): setMyPairDataActionType => { // экшн задания данных с сервера
     return {type: SET_MY_PAIR_DATA, selectValue1, selectValue2}
 };
-type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Range2: Array<string>}
+type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Range2: Array<string> }
 export let setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_RANGES, Range1, Range2}
 };
@@ -70,8 +70,8 @@ let initialState: initialStateType = { //стейт по умолчанию
     selectValue2: "",// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: 0, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: 0,// значение поля валюты 2 - при его вводе вычисляется Qty1
-    Range1:[],// диапазон валют для селекта 1
-    Range2:[],// диапазон валют для селекта 2
+    Range1: [],// диапазон валют для селекта 1
+    Range2: [],// диапазон валют для селекта 2
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
@@ -88,24 +88,33 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
+                Qty1: 0,
+                Qty2: 0
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE2: // кейс задания данных в стейт со второго селекта
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue2: action.selectValue2, // задание валюты с  первого селекта
+                Qty1: 0,
+                Qty2: 0
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY1: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
                 Qty1: action.Qty1, // задание количества валюты с первого поля
+                //Здесь же пересчитываем значение второго поля
+                Qty2: (action.Qty1 - state.MyPairData.FROMFEE) * (state.MyPairData.OUT / state.MyPairData.IN) - state.MyPairData.TOFEE
+                // расчет при задании количества входной валюты
+                // значение валюты 1 минус входная комиссия, умножаем на курс и вычитаем выходную комиссию
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY2: // кейс задания количества валюты с первого поля
             stateCopy = {
                 ...state, // копия всего стейта
                 Qty2: action.Qty2, // задание количества валюты со второго поля
+                Qty1: (action.Qty2 + state.MyPairData.TOFEE)*(state.MyPairData.IN/state.MyPairData.OUT) + state.MyPairData.FROMFEE
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_MY_PAIR_DATA: // кейс задания новой пары с данными
@@ -113,8 +122,8 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
             }
-            stateCopy.bestChangeData?.forEach(b=>{
-                if (b.FROM===action.selectValue1 && b.TO===action.selectValue2) {
+            stateCopy.bestChangeData?.forEach(b => {
+                if (b.FROM === action.selectValue1 && b.TO === action.selectValue2) {
                     stateCopy.MyPairData = b
                 }
             })
@@ -126,7 +135,7 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
                 Range2: action.Range2, // задание второго диапазона валют
             }
             return stateCopy; // возврат копии стейта после изменения
-      default:
+        default:
             return state; // по умолчанию стейт возврашается неизмененным
     }
 }

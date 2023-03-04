@@ -8,7 +8,6 @@ export const CalculatorSelectorsSimple = { // простые селекторы 
                 RangeLocal.push(b.FROM) // выбрать только пары к валюте FROM
             }
         })
-        console.log("getRange1:", RangeLocal)
         return RangeLocal
     },
     getRange2: (state) => {
@@ -18,7 +17,6 @@ export const CalculatorSelectorsSimple = { // простые селекторы 
                 RangeLocal.push(b.TO) // выбрать только пары к валюте FROM
             }
         })
-        console.log("getRange2:", RangeLocal)
         return RangeLocal
     },
     MyPairData: (state) => {
@@ -26,9 +24,9 @@ export const CalculatorSelectorsSimple = { // простые селекторы 
     }
 }
 
-export let getRange1Reselect = createSelector(CalculatorSelectorsSimple.getRange1, (RangeLocal) => {
-    return RangeLocal // мемоизация данных фильтрации для первого диапазона валют
+export let getRange1Reselect = createSelector(CalculatorSelectorsSimple.getRange1, (Range1) => {
+    return Range1 // мемоизация данных фильтрации для первого диапазона валют
 })
-export let getRange2Reselect = createSelector(CalculatorSelectorsSimple.getRange2, (RangeLocal) => {
-    return RangeLocal // мемоизация данных фильтрации для второго диапазона валют
+export let getRange2Reselect = createSelector(CalculatorSelectorsSimple.getRange2, (Range2) => {
+    return Range2 // мемоизация данных фильтрации для второго диапазона валют
 })

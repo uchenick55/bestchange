@@ -19,7 +19,7 @@ let Calculator: React.FC<CalculatorType> = ({
                                                 setQty1AC, setQty2AC, setSelectValue1,
                                                 setSelectValue2, MyPairData, Range1, Range2
                                             }) => {
-    return <div>
+    const inputsRender = <div>
         <select onChange={(e) => {
             setSelectValue1(e.currentTarget.value)
         }}>
@@ -41,6 +41,9 @@ let Calculator: React.FC<CalculatorType> = ({
         <input type="text" value={Qty2} onChange={(e) => {
             setQty2AC(Number(e.currentTarget.value))
         }}/>
+    </div>
+    return <div>
+        {inputsRender}
     </div>
 }
 

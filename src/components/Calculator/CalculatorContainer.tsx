@@ -40,7 +40,6 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
 
     useEffect(()=>{
         setRangesAC(Range1, Range2) // записываем диапазоны валют в стейт при изменении пары валют
-      console.log("useEffect")
         // записать в стейт Range1 и Range2
     },[selectValue1, selectValue2])
 
