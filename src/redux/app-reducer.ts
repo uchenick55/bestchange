@@ -1,4 +1,4 @@
-import {getBestChangeDataTC} from "./bestchange-reducer";
+import {getBestChangeDataTC, getBestChangeDataTC1} from "./bestchange-reducer";
 
 const SET_INITIALISED_APP = "myApp/app-reducer/SET_INITIALISED_APP"; //константа инициализации приложения
 
@@ -30,7 +30,7 @@ const appReducer = (state: initialStateType = initialState, action: any): initia
 
 export const initialisedAppThunkCreator = () => {// санкреатор инициализации приложения
     return (dispatch: any) => { // санки  инициализации приложения
-        const promise1 = dispatch(getBestChangeDataTC()) // пполучение данных с сервера
+        const promise1 = dispatch(getBestChangeDataTC1()) // пполучение данных с сервера
         Promise.all([promise1]) // если все промисы зарезолвились
             .then(() => {
                 dispatch(setInitialisedApp()) // смена флага инициализации на true

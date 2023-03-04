@@ -1,5 +1,6 @@
 import {api} from "../components/api/api";
 import {PairType} from "../components/Types/commonTypes";
+import {apiCommon} from "../components/api/apiLocalStorage";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 const SET_SELECTVALUE1 = "myApp/bestChangeReducer/SET_SELECTVALUE1"; //константа задания данных с первого селекта
@@ -30,12 +31,13 @@ export let setQty2AC = (Qty2: number): Qty2ActionType => { // экшн полу�
 
 type bestChangeDataType = {}
 type initialStateType = {
-    bestChangeData: any
+    bestChangeData: Array<PairType> | null
     MyPairData: PairType // только на чтение изнутри калькулятора
     selectValue1: string, // значение селекта 1 (валюты 1) (на его основе фильтруется bestChangeData и получаем MyPairData)
     selectValue2: string,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
+    Range1: Array<string> // диапазон значений для селекта 1
 
 }
 let initialState: initialStateType = { //стейт по умолчанию
@@ -56,6 +58,7 @@ let initialState: initialStateType = { //стейт по умолчанию
     selectValue2: "",// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: 0, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: 0,// значение поля валюты 2 - при его вводе вычисляется Qty1
+    Range1:[]
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
@@ -69,9 +72,18 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE1: // кейс задания данных в стейт с первого селекта
+            // @ts-ignore
+            // @ts-ignore
+            // @ts-ignore
+            // @ts-ignore
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
+                // @ts-ignore
+/*                state.bestChangeData?.forEach((b, index, Array) => {
+                    return b
+                })*/
+
             }
             console.log("selectValue1:", stateCopy.selectValue1)
             return stateCopy; // возврат копии стейта после изменения
@@ -109,6 +121,14 @@ export let getBestChangeDataTC = () => {//санкреатор получени�
         }
     }
 }
+
+export let getBestChangeDataTC1 = () => {//санкреатор получения данных из внешнего источника
+    return async (dispatch: any) => { // санка получения данных из внешнего источника
+        const response2 = await apiCommon.getData()
+        dispatch(response2)  //записать считаное из localStorage значение темы в store
+    }
+}
+
 
 export default bestChangeReducer;
 
