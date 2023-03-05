@@ -20,22 +20,22 @@ let Calculator: React.FC<CalculatorType> = ({
                                                 setSelectValue2, MyPairData, Range1, Range2
                                             }) => {
     const inputsRender = <div>
-        <select onChange={(e) => {
+        <select value={selectValue1} onChange={(e) => {
             setSelectValue1(e.currentTarget.value)
         }}>
             {Range1.map(r=>{
-                return <option selected={r===selectValue1} key={r}>{r}</option> // вывод первого селекта из Range1
+                return <option key={r}>{r}</option> // вывод первого селекта из Range1
             })}
         </select>
         <input type="text" value={Qty1} onChange={(e) => {
             setQty1AC(Number(e.currentTarget.value))
         }}/>
         <br/>
-        <select onChange={(e) => {
+        <select value={selectValue2} onChange={(e) => {
             setSelectValue2(e.currentTarget.value)
         }}>
             {Range2.map(r=>{
-                return <option selected={r===selectValue2} key={r}>{r}</option> // вывод второго селекта из Range2
+                return <option key={r}>{r}</option> // вывод второго селекта из Range2
             })}
         </select>
         <input type="text" value={Qty2} onChange={(e) => {

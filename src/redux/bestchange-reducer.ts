@@ -88,16 +88,12 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue1: action.selectValue1, // задание валюты с  первого селекта
-                Qty1: 0,
-                Qty2: 0
-            }
+           }
             return stateCopy; // возврат копии стейта после изменения
         case SET_SELECTVALUE2: // кейс задания данных в стейт со второго селекта
             stateCopy = {
                 ...state, // копия всего стейта
                 selectValue2: action.selectValue2, // задание валюты с  первого селекта
-                Qty1: 0,
-                Qty2: 0
             }
             return stateCopy; // возврат копии стейта после изменения
         case SET_QTY1: // кейс задания количества валюты с первого поля
