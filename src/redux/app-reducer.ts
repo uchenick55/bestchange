@@ -1,4 +1,7 @@
 import {getBestChangeDataTC, getBestChangeDataTC1} from "./bestchange-reducer";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {GlobalStateType} from "./store-redux";
 
 const SET_INITIALISED_APP = "myApp/app-reducer/SET_INITIALISED_APP"; //константа инициализации приложения
 
@@ -30,9 +33,15 @@ const appReducer = (state: initialStateType = initialState, action: ActionTypes)
     }
 }
 
-export const initialisedAppThunkCreator = () => {// санкреатор инициализации приложения
-    return (dispatch: any) => { // санки  инициализации приложения
-        const promise1 = dispatch(getBestChangeDataTC1()) // пполучение данных с сервера
+export const initialisedAppThunkCreator //санкреатор инициализации приложения
+    = (): ThunkAction<
+    void, // санка ничего не возвращает, void
+    GlobalStateType, // тип глобального стейта из redux-store
+    unknown, // доп аргументы
+    ActionTypes // возможные типы экшенов этого редьюсера
+    > => {
+    return (dispatch) => { // санки  инициализации приложения
+        const promise1 = dispatch(getBestChangeDataTC1()) // получение данных с сервера
         Promise.all([promise1]) // если все промисы зарезолвились
             .then(() => {
                 dispatch(setInitialisedApp()) // смена флага инициализации на true

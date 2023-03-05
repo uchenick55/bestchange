@@ -1,6 +1,9 @@
 import {api} from "../components/api/api";
 import {ErrorsType, PairType} from "../components/Types/commonTypes";
 import {apiCommon} from "../components/api/apiLocalStorage";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {GlobalStateType} from "./store-redux";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 const SET_SELECTVALUE1 = "myApp/bestChangeReducer/SET_SELECTVALUE1"; //константа задания данных с первого селекта
@@ -156,17 +159,23 @@ const bestChangeReducer = (state: initialStateType = initialState, action: Actio
     }
 }
 
-export const getBestChangeDataTC = () => {//санкреатор получения данных из внешнего источника
-    return async (dispatch: any) => { // санка получения данных из внешнего источника
+export const getBestChangeDataTC //санкреатор получения данных из внешнего источника
+    = (): ThunkAction<
+        Promise<void>, // санка ничего не возвращает, void
+        GlobalStateType, // тип глобального стейта из redux-store
+        unknown, // доп аргументы
+        ActionTypes // возможные типы экшенов этого редьюсера
+        > => {
+    return async (dispatch) => { // санка получения данных из внешнего источника
         const response2 = await api.getBestChangeData()  //получить данные из внешнего источника
         if (response2) {// если они не пустые
-            dispatch(setBestChangeData(response2))  //записать считаное из localStorage значение темы в store
+            dispatch({type: SET_BEST_CHANGE_DATA, bestChangeData:response2})  //записать считаное из localStorage значение темы в store
         }
     }
 }
 
 export const getBestChangeDataTC1 = () => {//санкреатор получения данных из внешнего источника
-    return async (dispatch: any) => { // санка получения данных из внешнего источника
+    return async (dispatch: Dispatch<ActionTypes>) => { // санка получения данных из localStorage
         const response2 = await apiCommon.getData()
         dispatch(response2)  //записать считаное из localStorage значение темы в store
     }
