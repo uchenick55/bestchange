@@ -1,5 +1,5 @@
 import {api} from "../components/api/api";
-import {PairType} from "../components/Types/commonTypes";
+import {ErrorsType, PairType} from "../components/Types/commonTypes";
 import {apiCommon} from "../components/api/apiLocalStorage";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
@@ -11,8 +11,8 @@ const SET_MY_PAIR_DATA = "myApp/bestChangeReducer/SET_MY_PAIR_DATA"; //конс�
 const SET_RANGES = "myApp/bestChangeReducer/SET_RANGES"; //константа задания Range1 и Range2 после селектора
 const SET_ERRORS = "myApp/bestChangeReducer/SET_ERRORS"; //константа задания ошибок формы
 
-type setBestChangeDataActionType = { type: typeof SET_BEST_CHANGE_DATA, bestChangeData: any }
-export const setBestChangeData = (bestChangeData: any): setBestChangeDataActionType => { // экшн задания данных с сервера
+type setBestChangeDataActionType = { type: typeof SET_BEST_CHANGE_DATA, bestChangeData: Array<PairType> | null }
+export const setBestChangeData = (bestChangeData: Array<PairType> | null): setBestChangeDataActionType => { // экшн задания данных с сервера
     return {type: SET_BEST_CHANGE_DATA, bestChangeData}
 };
 type selectValue1ActionType = { type: typeof SET_SELECTVALUE1, selectValue1: string }
@@ -39,12 +39,15 @@ type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Ran
 export const setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_RANGES, Range1, Range2}
 };
-type setErrorsActionType = { type: typeof SET_ERRORS, Errors: object }
-export const setErrorsAC = ( Errors: object): setErrorsActionType => { // экшн задания диапазонов выпадающих селектов
+type setErrorsActionType = { type: typeof SET_ERRORS, Errors: ErrorsType }
+export const setErrorsAC = ( Errors: ErrorsType): setErrorsActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_ERRORS,Errors}
 };
 
-type bestChangeDataType = {}
+type ActionTypes = setBestChangeDataActionType | selectValue1ActionType | selectValue2ActionType |
+    Qty1ActionType | Qty2ActionType | setMyPairDataActionType | setRangesActionType | setErrorsActionType
+
+
 type initialStateType = {
     bestChangeData: Array<PairType> | null
     MyPairData: PairType // только на чтение изнутри калькулятора
@@ -54,10 +57,7 @@ type initialStateType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-    Errors: {
-        ErrorInput1: string
-        ErrorInput2: string
-    } //все ошибки формы
+    Errors: ErrorsType //все ошибки формы
 }
 const initialState: initialStateType = { //стейт по умолчанию
     bestChangeData: null, // все загруженяе данные с сервера
@@ -85,16 +85,19 @@ const initialState: initialStateType = { //стейт по умолчанию
     } //все ошибки формы
 }
 
-const bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
+const bestChangeReducer = (state: initialStateType = initialState, action: ActionTypes): initialStateType => {//редьюсер
     let stateCopy: initialStateType; // объявлениечасти части стейта до изменения редьюсером
     switch (action.type) {
         case SET_BEST_CHANGE_DATA: // кейс задания данных в стейт с сервера
-            stateCopy = {
-                ...state, // копия всего стейта
-                bestChangeData: action.bestChangeData, // задание всех данных с сервера в стейт
-                MyPairData: action.bestChangeData[0], // задание первлй прары из списка в начальные значения
+            if (action.bestChangeData) {
+                stateCopy = {
+                    ...state, // копия всего стейта
+                    bestChangeData: action.bestChangeData, // задание всех данных с сервера в стейт
+                    MyPairData: action.bestChangeData[0], // задание первой прары из списка в начальные значения
+                }
+                return stateCopy; // возврат копии стейта после изменения
             }
-            return stateCopy; // возврат копии стейта после изменения
+            return state // возврат исходного стейта если не пришли данные с сервера
         case SET_SELECTVALUE1: // кейс задания данных в стейт с первого селекта
             stateCopy = {
                 ...state, // копия всего стейта

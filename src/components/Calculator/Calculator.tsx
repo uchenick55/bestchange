@@ -1,15 +1,12 @@
 import React from "react";
-import {PairType} from "../Types/commonTypes";
+import {ErrorsType, PairType} from "../Types/commonTypes";
 
 type CalculatorType = {
     selectValue1: string
     selectValue2: string
     Qty1: number
     Qty2: number
-    Errors: {
-        ErrorInput1: string
-        ErrorInput2: string
-    } //все ошибки формы
+    Errors: ErrorsType //все ошибки формы
     setQty1AC: (Qty1: number) => void
     setQty2AC: (Qty2: number) => void
     setSelectValue1: (selectValue1: string) => void,

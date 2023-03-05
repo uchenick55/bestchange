@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Container from "react-bootstrap/Container";
 import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
-import {PairType} from "../Types/commonTypes";
+import {ErrorsType, PairType} from "../Types/commonTypes";
 import {
     selectValue1AC,
     selectValue2AC, setErrorsAC,
@@ -24,17 +24,14 @@ export type CalculatorType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-    Errors: {
-        ErrorInput1: string
-        ErrorInput2: string
-    } //все ошибки формы
+    Errors: ErrorsType //все ошибки формы
     selectValue1AC: (selectValue1: string) => void,// задание значения из первого списка валют
     selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
     setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
     setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
     setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void, // задание диапазонов валют для выбора
-    setErrorsAC: (Errors: object)=> void // задание ошибок формы
+    setErrorsAC: (Errors: ErrorsType)=> void // задание ошибок формы
 
 }
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,

@@ -21,3 +21,8 @@ export type PairType = {
 }
 
 export type RangeType = Array<string>
+
+export type ErrorsType = {
+    ErrorInput1: string
+    ErrorInput2: string
+}

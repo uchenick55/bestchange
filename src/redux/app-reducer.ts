@@ -2,10 +2,12 @@ import {getBestChangeDataTC, getBestChangeDataTC1} from "./bestchange-reducer";
 
 const SET_INITIALISED_APP = "myApp/app-reducer/SET_INITIALISED_APP"; //константа инициализации приложения
 
-type setInitialisedApp = { type: typeof SET_INITIALISED_APP }
-export const setInitialisedApp = (): setInitialisedApp => { // экшн креатор  инициализации приложения
+type setInitialisedAppType = { type: typeof SET_INITIALISED_APP }
+export const setInitialisedApp = (): setInitialisedAppType => { // экшн креатор  инициализации приложения
     return {type: SET_INITIALISED_APP}
 };
+
+type ActionTypes = setInitialisedAppType
 
 type initialStateType = {
     initialisedApp: boolean
@@ -14,7 +16,7 @@ const initialState: initialStateType = { //стейт по умолчанию д
     initialisedApp: false, // флаг приложение инициализировано?
 }
 
-const appReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер инициализации приложения
+const appReducer = (state: initialStateType = initialState, action: ActionTypes): initialStateType => {//редьюсер инициализации приложения
     let stateCopy: initialStateType; // объявлениечасти части стейта до изменения редьюсером
     switch (action.type) {
         case SET_INITIALISED_APP: // экшн инициализации приложения
