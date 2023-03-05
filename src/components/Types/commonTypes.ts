@@ -19,3 +19,5 @@ export type PairType = {
     AMOUNT: number // максимальное количество валюты при получении
     PARAM: string // всегда manual
 }
+
+export type RangeType = Array<string>

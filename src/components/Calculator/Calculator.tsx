@@ -26,6 +26,12 @@ let Calculator: React.FC<CalculatorType> = ({
                                                 setSelectValue2, MyPairData, Range1, Range2,
                                                 Errors
                                             }) => {
+
+    const kurs:string = MyPairData.IN>MyPairData.OUT
+        // меняем порядок отображения валют в курсе в зависимости от того, что больше
+        ? `Курс обмена ${Math.round(100*MyPairData.IN / MyPairData.OUT)/100} ${MyPairData.FROM} =  1  ${MyPairData.TO} `
+        : `Курс обмена 1  ${MyPairData.FROM} = ${Math.round(100*MyPairData.OUT / MyPairData.IN)/100} ${MyPairData.TO}  `
+
     const inputsRender = <div>
         <select value={selectValue1} onChange={(e) => {
             setSelectValue1(e.currentTarget.value)
@@ -34,7 +40,8 @@ let Calculator: React.FC<CalculatorType> = ({
                 return <option key={r}>{r}</option> // вывод первого селекта из Range1
             })}
         </select>
-        <input type="text" value={Qty1} onChange={(e) => {
+        <label htmlFor={"Qty1"}>Отдаю</label>
+        <input name={"Qty1"}  type="text" value={Qty1} onChange={(e) => {
             setQty1AC(Number(e.currentTarget.value))
         }}/>
         {Errors.ErrorInput1}
@@ -46,7 +53,9 @@ let Calculator: React.FC<CalculatorType> = ({
                 return <option key={r}>{r}</option> // вывод второго селекта из Range2
             })}
         </select>
-        <input type="text" value={Qty2} onChange={(e) => {
+        <label htmlFor={"Qty2"}>Получаю</label>
+
+        <input name={"Qty2"} type="text" value={Qty2} onChange={(e) => {
             setQty2AC(Number(e.currentTarget.value))
         }}/>
         {Errors.ErrorInput2}
@@ -54,6 +63,7 @@ let Calculator: React.FC<CalculatorType> = ({
     </div>
 
     return <div>
+        {kurs}
         {inputsRender}
     </div>
 }

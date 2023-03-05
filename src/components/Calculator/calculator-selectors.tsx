@@ -1,25 +1,29 @@
 import {createSelector} from "reselect";
+import {GlobalStateType} from "../../redux/store-redux";
+import {PairType} from "../Types/commonTypes";
+
+
 
 export const CalculatorSelectorsSimple = { // простые селекторы из стейта
-    getRange1: (state) => {
-        const RangeLocal = []
-        state.bestChange && state.bestChange.bestChangeData.forEach((b)=>{
+    getRange1: (state:GlobalStateType) => {
+        const RangeLocal:Array<string> | null = []
+        state.bestChange.bestChangeData && state.bestChange.bestChangeData.forEach((b)=>{
             if( b.TO === state.bestChange.MyPairData.TO) {
                 RangeLocal.push(b.FROM) // выбрать только пары к валюте FROM
             }
         })
         return RangeLocal
     },
-    getRange2: (state) => {
-        const RangeLocal = []
-        state.bestChange && state.bestChange.bestChangeData.forEach((b)=>{
+    getRange2: (state:GlobalStateType) => {
+        const RangeLocal:Array<string> | null = []
+        state.bestChange.bestChangeData && state.bestChange.bestChangeData.forEach((b)=>{
             if( b.FROM === state.bestChange.MyPairData.FROM) {
-                RangeLocal.push(b.TO) // выбрать только пары к валюте FROM
+                RangeLocal.push(b.TO) // выбрать только пары к валюте TO
             }
         })
         return RangeLocal
     },
-    MyPairData: (state) => {
+    MyPairData: (state:GlobalStateType) => {
         return state.bestChange.MyPairData
     }
 }
