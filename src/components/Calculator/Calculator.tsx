@@ -24,7 +24,7 @@ let Calculator: React.FC<CalculatorType> = ({
             setSelectValue1(e.currentTarget.value)
         }}>
             {Range1.map(r=>{
-                return <option key={r}>{r}</option> // вывод первого селекта из Range1
+                return <option selected={r===selectValue1} key={r}>{r}</option> // вывод первого селекта из Range1
             })}
         </select>
         <input type="text" value={Qty1} onChange={(e) => {
@@ -35,7 +35,7 @@ let Calculator: React.FC<CalculatorType> = ({
             setSelectValue2(e.currentTarget.value)
         }}>
             {Range2.map(r=>{
-                return <option key={r}>{r}</option> // вывод второго селекта из Range2
+                return <option selected={r===selectValue2} key={r}>{r}</option> // вывод второго селекта из Range2
             })}
         </select>
         <input type="text" value={Qty2} onChange={(e) => {

@@ -38,6 +38,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                                                   Range1, Range2,setMyPairDataAC, setRangesAC
                                                 }) => {
 
+
     useEffect(()=>{
         setRangesAC(Range1, Range2) // записываем диапазоны валют в стейт при изменении пары валют
         // записать в стейт Range1 и Range2
@@ -53,11 +54,20 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         const FROMLocal:string = MyPairData.FROM// берем из стейта первую пару
         setMyPairDataAC(FROMLocal,selectValue2) // устанавливаем все значения новой пары
     }
+    useEffect(()=>{
+        selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой пары
+        selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение первой пары
+    },[MyPairData.FROM,MyPairData.TO]) // при каждом изменении полей FROM и TO
+
+    const reverseCurrency = () => {
+        setMyPairDataAC(selectValue2,selectValue1) // инвертируем пару
+    }
 
     const home = <div>
         <Container>
             <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
           {/*  <CalculatorFormik MyPairData={MyPairData}/>*/}
+          <div><button onClick={()=>{reverseCurrency()}}>Поменять валюты местами</button></div>
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
