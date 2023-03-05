@@ -24,6 +24,8 @@ export type CalculatorType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
+    ErrorInput1:string // ошибка первого поля
+    ErrorInput2:string // ошибка второго поля
     selectValue1AC: (selectValue1: string) => void,// задание значения из первого списка валют
     selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
@@ -35,7 +37,8 @@ export type CalculatorType = {
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
                                                   selectValue2, Qty1, Qty2,
                                                   selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
-                                                  Range1, Range2,setMyPairDataAC, setRangesAC
+                                                  Range1, Range2,setMyPairDataAC, setRangesAC,
+                                                  ErrorInput1, ErrorInput2
                                                 }) => {
 
 
@@ -45,6 +48,12 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         setQty1AC(MyPairData.MINAMOUNT)
         //задать в MINAMOUNT значение поля Qty1
     },[selectValue1, selectValue2])
+    useEffect(()=>{//
+        let ErrorInput1: string;
+
+        ErrorInput1 = Qty1 > MyPairData.MAXAMOUNT? "Qty1 > MyPairData.MAXAMOUNT": ""
+        ErrorInput1 = Qty1 < MyPairData.MINAMOUNT? "Qty1 < MyPairData.MINAMOUNT": ""
+    },[])
 
     const setSelectValue1=(selectValue1: string)=>{
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
@@ -74,6 +83,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
+                ErrorInput1={ErrorInput1} ErrorInput2={ErrorInput2}
             />
         </Container>
     </div>
@@ -91,6 +101,8 @@ const mapStateToProps = (state:any) => {
         Qty2: state.bestChange.Qty2, // значение поля валюты 2 - при его вводе вычисляется Qty1
         Range1: getRange1Reselect(state), // диапазон валют для первого селекта
         Range2: getRange2Reselect(state), // диапазон валют для второго селекта
+        ErrorInput1:state.bestChange.ErrorInput1,// ошибка первого поля
+        ErrorInput2:state.bestChange.ErrorInput2// ошибка второго поля
     }
 }
 

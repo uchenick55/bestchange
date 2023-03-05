@@ -50,7 +50,8 @@ type initialStateType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-
+    ErrorInput1:string // ошибка первого поля
+    ErrorInput2:string // ошибка второго поля
 }
 let initialState: initialStateType = { //стейт по умолчанию
     bestChangeData: null, // все загруженяе данные с сервера
@@ -72,6 +73,8 @@ let initialState: initialStateType = { //стейт по умолчанию
     Qty2: 0,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: [],// диапазон валют для селекта 1
     Range2: [],// диапазон валют для селекта 2
+    ErrorInput1:"ErrorInput1", // ошибка первого поля
+    ErrorInput2:"ErrorInput2" // ошибка второго поля
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер

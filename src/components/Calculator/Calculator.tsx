@@ -6,6 +6,8 @@ type CalculatorType = {
     selectValue2: string
     Qty1: number
     Qty2: number
+    ErrorInput1:string // ошибка первого поля
+    ErrorInput2:string // ошибка второго поля
     setQty1AC: (Qty1: number) => void
     setQty2AC: (Qty2: number) => void
     setSelectValue1: (selectValue1: string) => void,
@@ -13,11 +15,14 @@ type CalculatorType = {
     MyPairData: PairType
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
+
+
 }
 let Calculator: React.FC<CalculatorType> = ({
                                                 selectValue1, selectValue2, Qty1, Qty2,
                                                 setQty1AC, setQty2AC, setSelectValue1,
-                                                setSelectValue2, MyPairData, Range1, Range2
+                                                setSelectValue2, MyPairData, Range1, Range2,
+                                                ErrorInput1, ErrorInput2
                                             }) => {
     const inputsRender = <div>
         <select value={selectValue1} onChange={(e) => {
@@ -30,6 +35,7 @@ let Calculator: React.FC<CalculatorType> = ({
         <input type="text" value={Qty1} onChange={(e) => {
             setQty1AC(Number(e.currentTarget.value))
         }}/>
+        {ErrorInput1}
         <br/>
         <select value={selectValue2} onChange={(e) => {
             setSelectValue2(e.currentTarget.value)
@@ -41,7 +47,10 @@ let Calculator: React.FC<CalculatorType> = ({
         <input type="text" value={Qty2} onChange={(e) => {
             setQty2AC(Number(e.currentTarget.value))
         }}/>
+        {ErrorInput2}
+
     </div>
+
     return <div>
         {inputsRender}
     </div>
