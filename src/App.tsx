@@ -3,9 +3,10 @@ import {HashRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {initialisedAppThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import ContentContainer from "../src/components/Content/ContentContainer";
+import ContentContainer from "./components/Content/ContentContainer";
 import ErrorBoundary from "./components/common/ErrorBoundary/ErrorBoundary";
 import Container from "react-bootstrap/Container";
+import {GlobalStateType} from "./redux/store-redux";
 
 type AppProps = {
         initialisedApp: boolean
@@ -33,7 +34,7 @@ const App: React.FC<AppProps> = ({initialisedApp, initialisedAppThunkCreator})=>
     );
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: GlobalStateType) => {
     return {
         initialisedApp: state.app.initialisedApp, // флаг инициализации приложения
     }

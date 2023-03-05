@@ -28,9 +28,9 @@ export const CalculatorSelectorsSimple = { // простые селекторы 
     }
 }
 
-export let getRange1Reselect = createSelector(CalculatorSelectorsSimple.getRange1, (Range1) => {
+export const getRange1Reselect = createSelector(CalculatorSelectorsSimple.getRange1, (Range1) => {
     return Range1 // мемоизация данных фильтрации для первого диапазона валют
 })
-export let getRange2Reselect = createSelector(CalculatorSelectorsSimple.getRange2, (Range2) => {
+export const getRange2Reselect = createSelector(CalculatorSelectorsSimple.getRange2, (Range2) => {
     return Range2 // мемоизация данных фильтрации для второго диапазона валют
 })

@@ -8,7 +8,7 @@ const instance = axios.create({
     headers: {}
 });
 
-export let api = { // общий объект с методами api
+export const api = { // общий объект с методами api
     getBestChangeData: async () => {// получить данные bestChange с сервера
         const response: responseType  = await instance.get(``) // получили данные в виде XML
         return EditDataFromServer(response) // преобразуем в json и убираем лишние подобъекты, возвращаем данные

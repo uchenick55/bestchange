@@ -12,35 +12,35 @@ const SET_RANGES = "myApp/bestChangeReducer/SET_RANGES"; //константа з
 const SET_ERRORS = "myApp/bestChangeReducer/SET_ERRORS"; //константа задания ошибок формы
 
 type setBestChangeDataActionType = { type: typeof SET_BEST_CHANGE_DATA, bestChangeData: any }
-export let setBestChangeData = (bestChangeData: any): setBestChangeDataActionType => { // экшн задания данных с сервера
+export const setBestChangeData = (bestChangeData: any): setBestChangeDataActionType => { // экшн задания данных с сервера
     return {type: SET_BEST_CHANGE_DATA, bestChangeData}
 };
 type selectValue1ActionType = { type: typeof SET_SELECTVALUE1, selectValue1: string }
-export let selectValue1AC = (selectValue1: string): selectValue1ActionType => { // экшн получение данных с первого селекта
+export const selectValue1AC = (selectValue1: string): selectValue1ActionType => { // экшн получение данных с первого селекта
     return {type: SET_SELECTVALUE1, selectValue1}
 };
 type selectValue2ActionType = { type: typeof SET_SELECTVALUE2, selectValue2: string }
-export let selectValue2AC = (selectValue2: string): selectValue2ActionType => { // экшн получение данных со второго селекта
+export const selectValue2AC = (selectValue2: string): selectValue2ActionType => { // экшн получение данных со второго селекта
     return {type: SET_SELECTVALUE2, selectValue2}
 };
 type Qty1ActionType = { type: typeof SET_QTY1, Qty1: number }
-export let setQty1AC = (Qty1: number): Qty1ActionType => { // экшн получение данных с поля валюты 1
+export const setQty1AC = (Qty1: number): Qty1ActionType => { // экшн получение данных с поля валюты 1
     return {type: SET_QTY1, Qty1}
 };
 type Qty2ActionType = { type: typeof SET_QTY2, Qty2: number }
-export let setQty2AC = (Qty2: number): Qty2ActionType => { // экшн получение данных с поля валюты 2
+export const setQty2AC = (Qty2: number): Qty2ActionType => { // экшн получение данных с поля валюты 2
     return {type: SET_QTY2, Qty2}
 };
 type setMyPairDataActionType = { type: typeof SET_MY_PAIR_DATA, selectValue1: string, selectValue2: string }
-export let setMyPairDataAC = (selectValue1: string, selectValue2: string): setMyPairDataActionType => { // экшн задания данных с сервера
+export const setMyPairDataAC = (selectValue1: string, selectValue2: string): setMyPairDataActionType => { // экшн задания данных с сервера
     return {type: SET_MY_PAIR_DATA, selectValue1, selectValue2}
 };
 type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Range2: Array<string> }
-export let setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
+export const setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_RANGES, Range1, Range2}
 };
 type setErrorsActionType = { type: typeof SET_ERRORS, Errors: object }
-export let setErrorsAC = ( Errors: object): setErrorsActionType => { // экшн задания диапазонов выпадающих селектов
+export const setErrorsAC = ( Errors: object): setErrorsActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_ERRORS,Errors}
 };
 
@@ -59,7 +59,7 @@ type initialStateType = {
         ErrorInput2: string
     } //все ошибки формы
 }
-let initialState: initialStateType = { //стейт по умолчанию
+const initialState: initialStateType = { //стейт по умолчанию
     bestChangeData: null, // все загруженяе данные с сервера
     MyPairData: { // меняется целиком для каждой новой пары
         FROM: "", // какую валюту нужно отдать для обмена
@@ -85,7 +85,7 @@ let initialState: initialStateType = { //стейт по умолчанию
     } //все ошибки формы
 }
 
-let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
+const bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
     let stateCopy: initialStateType; // объявлениечасти части стейта до изменения редьюсером
     switch (action.type) {
         case SET_BEST_CHANGE_DATA: // кейс задания данных в стейт с сервера
@@ -153,7 +153,7 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
     }
 }
 
-export let getBestChangeDataTC = () => {//санкреатор получения данных из внешнего источника
+export const getBestChangeDataTC = () => {//санкреатор получения данных из внешнего источника
     return async (dispatch: any) => { // санка получения данных из внешнего источника
         const response2 = await api.getBestChangeData()  //получить данные из внешнего источника
         if (response2) {// если они не пустые
@@ -162,7 +162,7 @@ export let getBestChangeDataTC = () => {//санкреатор получени�
     }
 }
 
-export let getBestChangeDataTC1 = () => {//санкреатор получения данных из внешнего источника
+export const getBestChangeDataTC1 = () => {//санкреатор получения данных из внешнего источника
     return async (dispatch: any) => { // санка получения данных из внешнего источника
         const response2 = await apiCommon.getData()
         dispatch(response2)  //записать считаное из localStorage значение темы в store

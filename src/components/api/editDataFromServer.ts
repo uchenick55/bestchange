@@ -12,7 +12,7 @@ export const EditDataFromServer = (response: responseType) => {
         convert.xml2json(response.data, {compact: true, spaces: 2})
     );
 // в полученом JSON есть лишние вложеные подобъеты, значения полей неудобно доставать - убираем их
-    let response2: Array<PairType> = [] // массив в который будем собирать данные
+    const response2: Array<PairType> = [] // массив в который будем собирать данные
     data.rates.item.forEach((r: object) => { // пробегаем по всем парам
         const myObject: any = {}; // объект, в который собираем все элементы пары без лишних подобъектов
         Object.keys(r).forEach((o, index2) => { // пробегаем по элементам пары

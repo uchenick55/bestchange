@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Container from "react-bootstrap/Container";
 import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
-import CalculatorFormik from "./CalculatorFormik/CalculatorFormik";
 import {PairType} from "../Types/commonTypes";
 import {
     selectValue1AC,
@@ -15,6 +14,7 @@ import {
 } from "../../redux/bestchange-reducer";
 import Calculator from "./Calculator";
 import {CalculatorSelectorsSimple, getRange1Reselect, getRange2Reselect} from "./calculator-selectors";
+import {GlobalStateType} from "../../redux/store-redux";
 
 export type CalculatorType = {
     MyPairData: PairType // только на чтение изнутри калькулятора
@@ -45,13 +45,14 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                                                 }) => {
 
 
-    useEffect(()=>{//при изменении пары валют
-        setRangesAC(Range1, Range2) // записываем диапазоны валют в стейт
+    useEffect(()=>{//при изменении пары валют записываем диапазоны валют в стейт
+        setRangesAC(Range1, Range2) //
         // записать в стейт Range1 и Range2
         setQty1AC(MyPairData.MINAMOUNT)
         //задать в MINAMOUNT значение поля Qty1
     },[selectValue1, selectValue2])
-    useEffect(()=>{//
+
+    useEffect(()=>{// валидация формы
         let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
         if (Qty1>=MyPairData.MAXAMOUNT) {
             ErrorLocal.ErrorInput1 = `максимум ${MyPairData.MAXAMOUNT}`
@@ -72,27 +73,27 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
             ErrorLocal.ErrorInput2 = ``
         }
 
-        setErrorsAC(ErrorLocal)
+        setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
 
     },[Qty1,Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT])
 
-    const setSelectValue1=(selectValue1: string)=>{
+    const setSelectValue1=(selectValue1: string)=>{ // действия при выборе валюты в первом селекте
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
         const TOLocal:string = MyPairData.TO// берем из стейта вторую пару
         setMyPairDataAC(selectValue1, TOLocal)
     }
-    const setSelectValue2=(selectValue2: string)=>{
+    const setSelectValue2=(selectValue2: string)=>{// действия при выборе валюты во втором селекте
         selectValue2AC(selectValue2) // задаем в стейте измененное значение второй пары
         const FROMLocal:string = MyPairData.FROM// берем из стейта первую пару
         setMyPairDataAC(FROMLocal,selectValue2) // устанавливаем все значения новой пары
     }
-    useEffect(()=>{
+    useEffect(()=>{// при каждом изменении полей FROM и TO в MyPairData
         selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой валюты
         selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение второй валюты
-    },[MyPairData.FROM,MyPairData.TO]) // при каждом изменении полей FROM и TO
+    },[MyPairData.FROM,MyPairData.TO])
 
-    const reverseCurrency = () => {
-        setMyPairDataAC(selectValue2,selectValue1) // инвертируем пару по нажатию кнопки
+    const reverseCurrency = () => { // инвертируем пару по нажатию кнопки
+        setMyPairDataAC(selectValue2,selectValue1)
     }
 
     const home = <div>
@@ -113,7 +114,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         {home}
     </div>)
 }
-const mapStateToProps = (state:any) => {
+const mapStateToProps = (state:GlobalStateType) => {
     return {
         MyPairData: CalculatorSelectorsSimple.MyPairData(state),// данные выбраной пары
         selectValue1: state.bestChange.selectValue1, // значение селекта 1 (валюты 1) (на его основе фильтруется bestChangeData и получаем MyPairData)

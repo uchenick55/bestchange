@@ -20,19 +20,19 @@ type CalculatorType = {
 
 
 }
-let Calculator: React.FC<CalculatorType> = ({
+const Calculator: React.FC<CalculatorType> = ({
                                                 selectValue1, selectValue2, Qty1, Qty2,
                                                 setQty1AC, setQty2AC, setSelectValue1,
                                                 setSelectValue2, MyPairData, Range1, Range2,
                                                 Errors
                                             }) => {
 
-    const kurs:string = MyPairData.IN>MyPairData.OUT
+    const kurs:string = MyPairData.IN>MyPairData.OUT // вывод
         // меняем порядок отображения валют в курсе в зависимости от того, что больше
         ? `Курс обмена ${Math.round(100*MyPairData.IN / MyPairData.OUT)/100} ${MyPairData.FROM} =  1  ${MyPairData.TO} `
         : `Курс обмена 1  ${MyPairData.FROM} = ${Math.round(100*MyPairData.OUT / MyPairData.IN)/100} ${MyPairData.TO}  `
 
-    const inputsRender = <div>
+    const inputsRender = <div> {/*отрисовка формы калькулятора*/}
         <select value={selectValue1} onChange={(e) => {
             setSelectValue1(e.currentTarget.value)
         }}>

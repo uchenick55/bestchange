@@ -8,14 +8,12 @@ const reducers = combineReducers({ // объединяем стейт редью
     bestChange: bestChangeReducer, // стейт данных с сервера
 });
 
-//let store = createStore(reducers, applyMiddleware(thunkMiddleWare));//ApplyMiddleWare позволяет сделать прослойку между UI и редьюсером, чтобы можно было диспатчить не только экшены, но и санки.
-
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // возможность пользоваться reduxdevtools - только для разработки
 
 const store = createStore(reducers, composeEnhancers(
-  applyMiddleware(thunkMiddleWare)
+  applyMiddleware(thunkMiddleWare)//ApplyMiddleWare позволяет сделать прослойку между UI и редьюсером, чтобы можно было диспатчить не только экшены, но и санки.
 ));
 
 type reducersType = typeof reducers
