@@ -1,7 +1,6 @@
 import {api} from "../components/api/api";
 import {PairType} from "../components/Types/commonTypes";
 import {apiCommon} from "../components/api/apiLocalStorage";
-import {CalculatorSelectorsSimple} from "../components/Calculator/calculator-selectors";
 
 const SET_BEST_CHANGE_DATA = "myApp/bestChangeReducer/SET_BEST_CHANGE_DATA"; //константа задания данных с сервера
 const SET_SELECTVALUE1 = "myApp/bestChangeReducer/SET_SELECTVALUE1"; //константа задания данных с первого селекта
@@ -10,6 +9,7 @@ const SET_QTY1 = "myApp/bestChangeReducer/SET_QTY1"; //константа зад
 const SET_QTY2 = "myApp/bestChangeReducer/SET_QTY2"; //константа задания количества второй валюты
 const SET_MY_PAIR_DATA = "myApp/bestChangeReducer/SET_MY_PAIR_DATA"; //константа задания новой пары вавлют с данными
 const SET_RANGES = "myApp/bestChangeReducer/SET_RANGES"; //константа задания Range1 и Range2 после селектора
+const SET_ERRORS = "myApp/bestChangeReducer/SET_ERRORS"; //константа задания ошибок формы
 
 type setBestChangeDataActionType = { type: typeof SET_BEST_CHANGE_DATA, bestChangeData: any }
 export let setBestChangeData = (bestChangeData: any): setBestChangeDataActionType => { // экшн задания данных с сервера
@@ -39,6 +39,10 @@ type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Ran
 export let setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_RANGES, Range1, Range2}
 };
+type setErrorsActionType = { type: typeof SET_ERRORS, Errors: object }
+export let setErrorsAC = ( Errors: object): setErrorsActionType => { // экшн задания диапазонов выпадающих селектов
+    return {type: SET_ERRORS,Errors}
+};
 
 type bestChangeDataType = {}
 type initialStateType = {
@@ -50,8 +54,10 @@ type initialStateType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-    ErrorInput1:string // ошибка первого поля
-    ErrorInput2:string // ошибка второго поля
+    Errors: {
+        ErrorInput1: string
+        ErrorInput2: string
+    } //все ошибки формы
 }
 let initialState: initialStateType = { //стейт по умолчанию
     bestChangeData: null, // все загруженяе данные с сервера
@@ -73,8 +79,10 @@ let initialState: initialStateType = { //стейт по умолчанию
     Qty2: 0,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: [],// диапазон валют для селекта 1
     Range2: [],// диапазон валют для селекта 2
-    ErrorInput1:"ErrorInput1", // ошибка первого поля
-    ErrorInput2:"ErrorInput2" // ошибка второго поля
+    Errors: {
+        ErrorInput1:"", // ошибка первого поля
+        ErrorInput2:"" // ошибка второго поля
+    } //все ошибки формы
 }
 
 let bestChangeReducer = (state: initialStateType = initialState, action: any): initialStateType => {//редьюсер
@@ -132,6 +140,12 @@ let bestChangeReducer = (state: initialStateType = initialState, action: any): i
                 ...state, // копия всего стейта
                 Range1: action.Range1, // задание первого диапазона валют
                 Range2: action.Range2, // задание второго диапазона валют
+            }
+            return stateCopy; // возврат копии стейта после изменения
+        case SET_ERRORS: // кейс задания ошибок формы
+            stateCopy = {
+                ...state, // копия всего стейта
+                Errors: action.Errors, // задание ошибок формы
             }
             return stateCopy; // возврат копии стейта после изменения
         default:

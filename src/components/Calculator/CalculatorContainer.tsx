@@ -7,7 +7,7 @@ import CalculatorFormik from "./CalculatorFormik/CalculatorFormik";
 import {PairType} from "../Types/commonTypes";
 import {
     selectValue1AC,
-    selectValue2AC,
+    selectValue2AC, setErrorsAC,
     setMyPairDataAC,
     setQty1AC,
     setQty2AC,
@@ -24,21 +24,24 @@ export type CalculatorType = {
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: Array<string> // диапазон значений для селекта 1
     Range2: Array<string> // диапазон значений для селекта 2
-    ErrorInput1:string // ошибка первого поля
-    ErrorInput2:string // ошибка второго поля
+    Errors: {
+        ErrorInput1: string
+        ErrorInput2: string
+    } //все ошибки формы
     selectValue1AC: (selectValue1: string) => void,// задание значения из первого списка валют
     selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
     setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
     setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
-    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void,
+    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void, // задание диапазонов валют для выбора
+    setErrorsAC: (Errors: object)=> void // задание ошибок формы
 
 }
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
                                                   selectValue2, Qty1, Qty2,
                                                   selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
                                                   Range1, Range2,setMyPairDataAC, setRangesAC,
-                                                  ErrorInput1, ErrorInput2
+                                                  Errors, setErrorsAC
                                                 }) => {
 
 
@@ -49,11 +52,29 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         //задать в MINAMOUNT значение поля Qty1
     },[selectValue1, selectValue2])
     useEffect(()=>{//
-        let ErrorInput1: string;
+        let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
+        if (Qty1>=MyPairData.MAXAMOUNT) {
+            ErrorLocal.ErrorInput1 = `максимум ${MyPairData.MAXAMOUNT}`
+        }
+        if (Qty1<=MyPairData.MINAMOUNT) {
+            ErrorLocal.ErrorInput1 = `минимум  ${MyPairData.MINAMOUNT}`
+        }
+        if (Qty1>=MyPairData.MINAMOUNT && Qty1<=MyPairData.MAXAMOUNT) {
+            ErrorLocal.ErrorInput1 = ""
+        }
+        if (Qty2>MyPairData.AMOUNT) {
+            ErrorLocal.ErrorInput2 = `максимум ${MyPairData.AMOUNT}`
+        }
+        if (Qty2<0) {
+            ErrorLocal.ErrorInput2 = `не меньше 0`
+        }
+        if (Qty2>0 && Qty2<=MyPairData.AMOUNT) {
+            ErrorLocal.ErrorInput2 = ``
+        }
 
-        ErrorInput1 = Qty1 > MyPairData.MAXAMOUNT? "Qty1 > MyPairData.MAXAMOUNT": ""
-        ErrorInput1 = Qty1 < MyPairData.MINAMOUNT? "Qty1 < MyPairData.MINAMOUNT": ""
-    },[])
+        setErrorsAC(ErrorLocal)
+
+    },[Qty1,Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT])
 
     const setSelectValue1=(selectValue1: string)=>{
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
@@ -83,7 +104,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
-                ErrorInput1={ErrorInput1} ErrorInput2={ErrorInput2}
+                Errors={Errors}
             />
         </Container>
     </div>
@@ -101,12 +122,11 @@ const mapStateToProps = (state:any) => {
         Qty2: state.bestChange.Qty2, // значение поля валюты 2 - при его вводе вычисляется Qty1
         Range1: getRange1Reselect(state), // диапазон валют для первого селекта
         Range2: getRange2Reselect(state), // диапазон валют для второго селекта
-        ErrorInput1:state.bestChange.ErrorInput1,// ошибка первого поля
-        ErrorInput2:state.bestChange.ErrorInput2// ошибка второго поля
+        Errors:state.bestChange.Errors,// все ошибки формы
     }
 }
 
 export default connect(mapStateToProps, {
-    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC, setRangesAC
+    selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC, setRangesAC, setErrorsAC
 })(CalculatorContainer)
 
