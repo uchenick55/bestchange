@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/bestchange/static/css/main.79440063.css",
-    "main.js": "/bestchange/static/js/main.3608920d.js",
+    "main.js": "/bestchange/static/js/main.68c89265.js",
     "static/css/169.4dee9d7a.chunk.css": "/bestchange/static/css/169.4dee9d7a.chunk.css",
-    "static/js/169.62a55617.chunk.js": "/bestchange/static/js/169.62a55617.chunk.js",
+    "static/js/169.bd45fc83.chunk.js": "/bestchange/static/js/169.bd45fc83.chunk.js",
     "static/css/342.9afd456f.chunk.css": "/bestchange/static/css/342.9afd456f.chunk.css",
     "index.html": "/bestchange/index.html",
     "main.79440063.css.map": "/bestchange/static/css/main.79440063.css.map",
-    "main.3608920d.js.map": "/bestchange/static/js/main.3608920d.js.map",
+    "main.68c89265.js.map": "/bestchange/static/js/main.68c89265.js.map",
     "169.4dee9d7a.chunk.css.map": "/bestchange/static/css/169.4dee9d7a.chunk.css.map",
-    "169.62a55617.chunk.js.map": "/bestchange/static/js/169.62a55617.chunk.js.map",
+    "169.bd45fc83.chunk.js.map": "/bestchange/static/js/169.bd45fc83.chunk.js.map",
     "342.9afd456f.chunk.css.map": "/bestchange/static/css/342.9afd456f.chunk.css.map"
   },
   "entrypoints": [
     "static/css/main.79440063.css",
-    "static/js/main.3608920d.js"
+    "static/js/main.68c89265.js"
   ]
 }
