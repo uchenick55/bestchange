@@ -1,0 +1,8 @@
+.reverseImg {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -105,13 +105,12 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
     const home = <div>
         <Container>
             <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
-          <div><button onClick={()=>{reverseCurrency()}}>Поменять валюты местами</button></div>
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
                 Errors={Errors} Qty1String={Qty1String} setQty1String={setQty1String}
-                Qty2String={Qty2String} setQty2String={setQty2String}
+                Qty2String={Qty2String} setQty2String={setQty2String} reverseCurrency={reverseCurrency}
             />
         </Container>
     </div>
