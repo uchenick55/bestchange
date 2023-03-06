@@ -29,77 +29,82 @@ export type CalculatorType = {
     selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
     setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
-    setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
+    setMyPairDataAC: (selectValue1: string, selectValue2: string) => void, // задание данных для новой пары
     setRangesAC: (Range1: RangeType, Range2: RangeType) => void, // задание диапазонов валют для выбора
-    setErrorsAC: (Errors: ErrorsType)=> void // задание ошибок формы
-   // reverseCurrency: () => void  // инвертируем пару по нажатию кнопки
+    setErrorsAC: (Errors: ErrorsType) => void // задание ошибок формы
+    // reverseCurrency: () => void  // инвертируем пару по нажатию кнопки
 
 }
-const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
-                                                  selectValue2, Qty1, Qty2,
-                                                  selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
-                                                  Range1, Range2,setMyPairDataAC, setRangesAC,
-                                                  Errors, setErrorsAC
-                                                }) => {
+const CalculatorContainer: React.FC<CalculatorType> = ({
+                                                           MyPairData, selectValue1,
+                                                           selectValue2, Qty1, Qty2,
+                                                           selectValue1AC, selectValue2AC, setQty1AC, setQty2AC,
+                                                           Range1, Range2, setMyPairDataAC, setRangesAC,
+                                                           Errors, setErrorsAC
+                                                       }) => {
 
+    let [Qty1String, setQty1String] = useState<string>(Qty1.toString())
+    const [Qty2String, setQty2String] = useState<string>(Qty2.toString())
 
-    useEffect(()=>{//при изменении пары валют записываем диапазоны валют в стейт
+    useEffect(() => {//при изменении пары валют записываем диапазоны валют в стейт
         setRangesAC(Range1, Range2) //
         // записать в стейт Range1 и Range2
         setQty1AC(MyPairData.MINAMOUNT)
         //задать в MINAMOUNT значение поля Qty1
-    },[selectValue1, selectValue2])
+    }, [selectValue1, selectValue2])
 
-    useEffect(()=>{// валидация формы
+    useEffect(() => {// валидация формы
         let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
-        if (Qty1>=MyPairData.MAXAMOUNT) {
+
+        // поле ввода количества валюты 1
+        if (Qty1 >= MyPairData.MAXAMOUNT) {
             ErrorLocal.ErrorInput1 = `максимум ${MyPairData.MAXAMOUNT}`
         }
-        if (Qty1<=MyPairData.MINAMOUNT) {
+        if (Qty1 <= MyPairData.MINAMOUNT) {
             ErrorLocal.ErrorInput1 = `минимум  ${MyPairData.MINAMOUNT}`
         }
-        if (Qty1>=MyPairData.MINAMOUNT && Qty1<=MyPairData.MAXAMOUNT) {
+        if (Qty1 >= MyPairData.MINAMOUNT && Qty1 <= MyPairData.MAXAMOUNT ) {
             ErrorLocal.ErrorInput1 = ""
         }
-        if (Qty2>MyPairData.AMOUNT) {
+
+        // поле ввода количества валюты 2
+        if (Qty2 > MyPairData.AMOUNT) {
             ErrorLocal.ErrorInput2 = `максимум ${MyPairData.AMOUNT}`
         }
-        if (Qty2<0) {
+        if (Qty2 < 0) {
             ErrorLocal.ErrorInput2 = `не меньше 0`
         }
-        if (Qty2>0 && Qty2<=MyPairData.AMOUNT) {
+        if (Qty2 > 0 && Qty2 <= MyPairData.AMOUNT) {
             ErrorLocal.ErrorInput2 = ``
         }
 
         setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
 
-    },[Qty1,Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT])
+    }, [Qty1, Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT])
 
-    const setSelectValue1=(selectValue1: string)=>{ // действия при выборе валюты в первом селекте
+    const setSelectValue1 = (selectValue1: string) => { // действия при выборе валюты в первом селекте
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
-        const TOLocal:string = MyPairData.TO// берем из стейта вторую пару
+        const TOLocal: string = MyPairData.TO// берем из стейта вторую пару
         setMyPairDataAC(selectValue1, TOLocal)
     }
-    const setSelectValue2=(selectValue2: string)=>{// действия при выборе валюты во втором селекте
+    const setSelectValue2 = (selectValue2: string) => {// действия при выборе валюты во втором селекте
         selectValue2AC(selectValue2) // задаем в стейте измененное значение второй пары
-        const FROMLocal:string = MyPairData.FROM// берем из стейта первую пару
-        setMyPairDataAC(FROMLocal,selectValue2) // устанавливаем все значения новой пары
+        const FROMLocal: string = MyPairData.FROM// берем из стейта первую пару
+        setMyPairDataAC(FROMLocal, selectValue2) // устанавливаем все значения новой пары
     }
-    useEffect(()=>{// при каждом изменении полей FROM и TO в MyPairData
+    useEffect(() => {// при каждом изменении полей FROM и TO в MyPairData
         selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой валюты
         selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение второй валюты
-    },[MyPairData.FROM,MyPairData.TO])
-    const [Qty1String, setQty1String] = useState<string>(Qty1.toString())
-    const [Qty2String, setQty2String] = useState<string>(Qty2.toString())
+    }, [MyPairData.FROM, MyPairData.TO])
 
-    useEffect(()=>{
+    useEffect(() => {
         setQty1String(Qty1.toString()) // при каждом обновлении Qty1 в сторе - обновить значение строки поля вывода 1
         setQty2String(Qty2.toString()) // при каждом обновлении Qty2 в сторе - обновить значение строки поля вывода 2
-    },[setQty1String, Qty1, setQty2String, Qty2])
+    }, [setQty1String, Qty1, setQty2String, Qty2])
 
 
     const reverseCurrency = () => { // инвертируем пару по нажатию кнопки
-        setMyPairDataAC(selectValue2,selectValue1)
+        setMyPairDataAC(selectValue2, selectValue1)
     }
 
     const home = <div>
@@ -110,6 +115,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
                 Errors={Errors} Qty1String={Qty1String} setQty1String={setQty1String}
                 Qty2String={Qty2String} setQty2String={setQty2String} reverseCurrency={reverseCurrency}
+                setErrorsAC={setErrorsAC}
             />
         </Container>
     </div>
@@ -127,20 +133,20 @@ type mapStateToPropsType = {
     Qty2: number, // значение поля валюты 2 - при его вводе вычисляется Qty1
     Range1: RangeType, // диапазон валют для первого селекта
     Range2: RangeType, // диапазон валют для второго селекта
-    Errors:ErrorsType,// все ошибки формы
+    Errors: ErrorsType,// все ошибки формы
 }
 
 type mapDispatchToPropsType = {
     selectValue1AC: (selectValue1: string) => void
     selectValue2AC: (selectValue2: string) => void
-    setQty1AC:(Qty1: number) => void
-    setQty2AC:(Qty2: number) => void
-    setMyPairDataAC:(selectValue1: string, selectValue2: string) => void
+    setQty1AC: (Qty1: number) => void
+    setQty2AC: (Qty2: number) => void
+    setMyPairDataAC: (selectValue1: string, selectValue2: string) => void
     setRangesAC: (Range1: RangeType, Range2: RangeType) => void
-    setErrorsAC:( Errors: ErrorsType) => void
+    setErrorsAC: (Errors: ErrorsType) => void
 }
 
-const mapStateToProps = (state:GlobalStateType) => {
+const mapStateToProps = (state: GlobalStateType) => {
     return {
         MyPairData: CalculatorSelectorsSimple.MyPairData(state),// данные выбраной пары
         selectValue1: state.bestChange.selectValue1, // значение селекта 1 (валюты 1) (на его основе фильтруется bestChangeData и получаем MyPairData)
@@ -149,12 +155,11 @@ const mapStateToProps = (state:GlobalStateType) => {
         Qty2: state.bestChange.Qty2, // значение поля валюты 2 - при его вводе вычисляется Qty1
         Range1: getRange1Reselect(state), // диапазон валют для первого селекта
         Range2: getRange2Reselect(state), // диапазон валют для второго селекта
-        Errors:state.bestChange.Errors,// все ошибки формы
+        Errors: state.bestChange.Errors,// все ошибки формы
     }
 }
 
-export default connect<
-    mapStateToPropsType, // тип mapStateToProps
+export default connect<mapStateToPropsType, // тип mapStateToProps
     mapDispatchToPropsType, // тип mapDispatchToProps
     unknown, // тип входящих пропсов от родителя
     GlobalStateType // глобальный стейт из стора

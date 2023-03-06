@@ -25,13 +25,14 @@ type CalculatorType = {
     Qty2String: string// строковый ввод количества второрой валюты
     setQty2String: (Qty2String: string) => void // изменение количества первой валюты в виде строки
     reverseCurrency: () => void // функция смены валют
+    setErrorsAC: (Errors: ErrorsType) => void // задание ошибок формы
 }
 const Calculator: React.FC<CalculatorType> = ({
                                                   selectValue1, selectValue2, Qty1, Qty2,
                                                   setQty1AC, setQty2AC, setSelectValue1,
                                                   setSelectValue2, MyPairData, Range1, Range2,
                                                   Errors, Qty1String, setQty1String,
-                                                  Qty2String, setQty2String, reverseCurrency
+                                                  Qty2String, setQty2String, reverseCurrency, setErrorsAC
                                               }) => {
 
 
@@ -39,11 +40,20 @@ const Calculator: React.FC<CalculatorType> = ({
         const eLocal: string = e.currentTarget.value
         if (Number(eLocal)) setQty1AC(Number(eLocal))
         setQty1String(eLocal)
+        // зануление ошибок при пустом поле текстового ввода
+        let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
+        ErrorLocal.ErrorInput1 = ``
+        setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
     }
     const onChangeQty2 = (e: ChangeEvent<HTMLInputElement>) => {
         const eLocal: string = e.currentTarget.value
         if (Number(eLocal)) setQty2AC(Number(eLocal))
         setQty2String(eLocal)
+        // зануление ошибок при пустом поле текстового ввода
+        let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
+        ErrorLocal.ErrorInput2 = ``
+        setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
+
     }
 
     const kurs: string = MyPairData.IN > MyPairData.OUT // вывод
@@ -71,11 +81,14 @@ const Calculator: React.FC<CalculatorType> = ({
                           }}
             />
         </InputGroup>
-        <div
-            className={classes.ErrorMessage}>{Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}</div>
+        <div className={classes.ErrorMessage}>
+            {Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}
+        </div>
 
         <div className='d-flex justify-content-center align-items-center'>
-            <img onClick={() => { reverseCurrency()}} className={classes.reverseImg} src={reversePic}
+            <img onClick={() => {
+                reverseCurrency()
+            }} className={classes.reverseImg} src={reversePic}
                  alt="Поменять местами" title="Поменять местами"/>
         </div>
 
@@ -98,7 +111,11 @@ const Calculator: React.FC<CalculatorType> = ({
                           }}
             />
         </InputGroup>
-        {Errors.ErrorInput2} {/*ошибки второго поля ввода количества валюты*/}
+        <div className={classes.ErrorMessage}>
+            {Errors.ErrorInput2} {/*ошибки второго поля ввода количества валюты*/}
+        </div>
+
+
     </div>
 
     return <Container className={classes.Container}>

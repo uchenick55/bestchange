@@ -41,7 +41,7 @@ export const initialisedAppThunkCreator //санкреатор инициали�
     ActionTypes // возможные типы экшенов этого редьюсера
     > => {
     return (dispatch) => { // санки  инициализации приложения
-        const promise1 = dispatch(getBestChangeDataTC1()) // получение данных с сервера
+        const promise1 = dispatch(getBestChangeDataTC()) // получение данных с сервера
         Promise.all([promise1]) // если все промисы зарезолвились
             .then(() => {
                 dispatch(setInitialisedApp()) // смена флага инициализации на true
