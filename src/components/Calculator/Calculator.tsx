@@ -1,8 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
-import {Form} from "react-bootstrap";
+import {Col, Container, Form} from "react-bootstrap";
 import {ErrorsType, PairType} from "../Types/commonTypes";
 import reversePic from "../common/assets/swg/transfer-svgrepo-com.svg"
 import classes from "./Calculator.module.css"
+import InputGroup from 'react-bootstrap/InputGroup';
+import commonClasses from "../common/CommonClasses/common.module.css";
+
 
 type CalculatorType = {
     selectValue1: string
@@ -49,23 +52,35 @@ const Calculator: React.FC<CalculatorType> = ({
         : `Курс обмена 1  ${MyPairData.FROM} = ${Math.round(100 * MyPairData.OUT / MyPairData.IN) / 100} ${MyPairData.TO}  `
 
     const inputsRender = <div> {/*отрисовка формы калькулятора*/}
-        <Form.Select value={selectValue1} onChange={(e) => { // выпадающий список выбра первой валюты
-            setSelectValue1(e.currentTarget.value)
-        }}>
-            {Range1.map(r => {
-                return <option key={r}>{r}</option> // вывод первого селекта из Range1
-            })}
-        </Form.Select>
-        <label htmlFor={"Qty1"}>Отдаю</label>
-        <Form.Control name={"Qty1"} type="text" value={Qty1String} // первое поле ввода количества валюты
+            <Col>
+            <Form.Select value={selectValue1} onChange={(e) => { // выпадающий список выбра первой валюты
+                setSelectValue1(e.currentTarget.value)
+            }}>
+                {Range1.map(r => {
+                    return <option key={r}>{r}</option> // вывод первого селекта из Range1
+                })}
+            </Form.Select>
+            </Col>
+        <Col>
+        <InputGroup>
 
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          onChangeQty1(e)
-                      }}
-        />
-        {Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}
+            <InputGroup.Text className={classes.labelWidth}
+            >Отдаю:</InputGroup.Text>
 
-        <img onClick={()=>{reverseCurrency()}} className={classes.reverseImg} src={reversePic} alt="Поменять валюты местами"/>
+            <Form.Control name={"Qty1"} type="text" value={Qty1String} // первое поле ввода количества валюты
+
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              onChangeQty1(e)
+                          }}
+            />
+        </InputGroup>
+        </Col>
+            <div className={classes.ErrorMessage}>{Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}</div>
+
+
+        <img onClick={() => {
+            reverseCurrency()
+        }} className={classes.reverseImg} src={reversePic} alt="Поменять валюты местами"/>
 
         <Form.Select value={selectValue2} onChange={(e) => {// выпадающий список выбора второй валюты
             setSelectValue2(e.currentTarget.value)
@@ -83,13 +98,13 @@ const Calculator: React.FC<CalculatorType> = ({
                       }}
         />
         {Errors.ErrorInput2} {/*ошибки второго поля ввода количества валюты*/}
-
     </div>
 
-    return <div>
-        {kurs}
-        {inputsRender}
-    </div>
+    return <Container >
+        <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
+        <div className={classes.kurs}>{kurs}</div>
+        <div>{inputsRender}</div>
+    </Container>
 }
 
 export default Calculator

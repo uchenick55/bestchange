@@ -103,8 +103,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
     }
 
     const home = <div>
-        <Container>
-            <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
+        <Container className='lg-3'>
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
@@ -119,6 +118,28 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         {home}
     </div>)
 }
+
+type mapStateToPropsType = {
+    MyPairData: PairType,// данные выбраной пары
+    selectValue1: string, // значение селекта 1 (валюты 1) (на его основе фильтруется bestChangeData и получаем MyPairData)
+    selectValue2: string,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
+    Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
+    Qty2: number, // значение поля валюты 2 - при его вводе вычисляется Qty1
+    Range1: Array<string>, // диапазон валют для первого селекта
+    Range2: Array<string>, // диапазон валют для второго селекта
+    Errors:ErrorsType,// все ошибки формы
+}
+
+type mapDispatchToPropsType = {
+    selectValue1AC: (selectValue1: string) => void
+    selectValue2AC: (selectValue2: string) => void
+    setQty1AC:(Qty1: number) => void
+    setQty2AC:(Qty2: number) => void
+    setMyPairDataAC:(selectValue1: string, selectValue2: string) => void
+    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void
+    setErrorsAC:( Errors: ErrorsType) => void
+}
+
 const mapStateToProps = (state:GlobalStateType) => {
     return {
         MyPairData: CalculatorSelectorsSimple.MyPairData(state),// данные выбраной пары
@@ -132,7 +153,11 @@ const mapStateToProps = (state:GlobalStateType) => {
     }
 }
 
-export default connect(mapStateToProps, {
+export default connect<
+    mapStateToPropsType, // тип mapStateToProps
+    mapDispatchToPropsType, // тип mapDispatchToProps
+    unknown, // тип входящих пропсов от родителя
+    GlobalStateType // глобальный стейт из стора
+    >(mapStateToProps, {
     selectValue1AC, selectValue2AC, setQty1AC, setQty2AC, setMyPairDataAC, setRangesAC, setErrorsAC
 })(CalculatorContainer)
-

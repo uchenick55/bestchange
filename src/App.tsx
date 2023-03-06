@@ -34,11 +34,25 @@ const App: React.FC<AppProps> = ({initialisedApp, initialisedAppThunkCreator})=>
     );
 }
 
+type mapStateToPropsType = {
+    initialisedApp: boolean
+}
+
+type mapDispatchToPropsType = {
+    initialisedAppThunkCreator: () => void
+}
 const mapStateToProps = (state: GlobalStateType) => {
     return {
         initialisedApp: state.app.initialisedApp, // флаг инициализации приложения
     }
 }
 
-export default connect(mapStateToProps, {initialisedAppThunkCreator})(App);
+
+
+export default connect<
+    mapStateToPropsType, // тип mapStateToProps
+    mapDispatchToPropsType, // тип mapDispatchToProps
+    unknown, // тип входящих пропсов от родителя
+    GlobalStateType// глобальный стейт из стора
+    >(mapStateToProps, {initialisedAppThunkCreator})(App);
 // коннектим к app флаг и санки инициализации
