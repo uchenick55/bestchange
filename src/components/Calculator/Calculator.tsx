@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useState} from "react";
-import {Col, Container, Form} from "react-bootstrap";
+import React, {ChangeEvent} from "react";
+import {Container, Form} from "react-bootstrap";
 import {ErrorsType, PairType} from "../Types/commonTypes";
 import reversePic from "../common/assets/swg/transfer-svgrepo-com.svg"
 import classes from "./Calculator.module.css"
@@ -48,20 +48,17 @@ const Calculator: React.FC<CalculatorType> = ({
 
     const kurs: string = MyPairData.IN > MyPairData.OUT // вывод
         // меняем порядок отображения валют в курсе в зависимости от того, что больше
-        ? `Курс обмена ${Math.round(100 * MyPairData.IN / MyPairData.OUT) / 100} ${MyPairData.FROM} =  1  ${MyPairData.TO} `
-        : `Курс обмена 1  ${MyPairData.FROM} = ${Math.round(100 * MyPairData.OUT / MyPairData.IN) / 100} ${MyPairData.TO}  `
+        ? `Курс ${Math.round(100 * MyPairData.IN / MyPairData.OUT) / 100} ${MyPairData.FROM} =  1  ${MyPairData.TO} `
+        : `Курс 1  ${MyPairData.FROM} = ${Math.round(100 * MyPairData.OUT / MyPairData.IN) / 100} ${MyPairData.TO}  `
 
     const inputsRender = <div> {/*отрисовка формы калькулятора*/}
-            <Col>
-            <Form.Select value={selectValue1} onChange={(e) => { // выпадающий список выбра первой валюты
-                setSelectValue1(e.currentTarget.value)
-            }}>
-                {Range1.map(r => {
-                    return <option key={r}>{r}</option> // вывод первого селекта из Range1
-                })}
-            </Form.Select>
-            </Col>
-        <Col>
+        <Form.Select className="my-2" value={selectValue1} onChange={(e) => { // выпадающий список выбра первой валюты
+            setSelectValue1(e.currentTarget.value)
+        }}>
+            {Range1.map(r => {
+                return <option key={r}>{r}</option> // вывод первого селекта из Range1
+            })}
+        </Form.Select>
         <InputGroup>
 
             <InputGroup.Text className={classes.labelWidth}
@@ -74,36 +71,42 @@ const Calculator: React.FC<CalculatorType> = ({
                           }}
             />
         </InputGroup>
-        </Col>
-            <div className={classes.ErrorMessage}>{Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}</div>
+        <div
+            className={classes.ErrorMessage}>{Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}</div>
 
 
         <img onClick={() => {
             reverseCurrency()
         }} className={classes.reverseImg} src={reversePic} alt="Поменять валюты местами"/>
 
-        <Form.Select value={selectValue2} onChange={(e) => {// выпадающий список выбора второй валюты
+
+        <Form.Select className="my-2" value={selectValue2} onChange={(e) => {// выпадающий список выбора второй валюты
             setSelectValue2(e.currentTarget.value)
         }}>
             {Range2.map(r => {
                 return <option key={r}>{r}</option> // вывод второго селекта из Range2
             })}
         </Form.Select>
-        <label htmlFor={"Qty2"}>Получаю</label>
 
-        <Form.Control name={"Qty2"} type="text" value={Qty2String}  // второе поле ввода количества валюты
+        <InputGroup>
+            <InputGroup.Text className={classes.labelWidth}
+            >Получаю:</InputGroup.Text>
+            <Form.Control name={"Qty2"} type="text" value={Qty2String}  // второе поле ввода количества валюты
 
-                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          onChangeQty2(e)
-                      }}
-        />
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                              onChangeQty2(e)
+                          }}
+            />
+        </InputGroup>
         {Errors.ErrorInput2} {/*ошибки второго поля ввода количества валюты*/}
     </div>
 
-    return <Container >
-        <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
+    return <Container className={classes.Container}>
+        <h2 className={commonClasses.pageHeader}>Калькулятор</h2> {/*заголовок*/}
         <div className={classes.kurs}>{kurs}</div>
+        {/*курс обмена*/}
         <div>{inputsRender}</div>
+        {/*форма выбора валют и ввода количества*/}
     </Container>
 }
 

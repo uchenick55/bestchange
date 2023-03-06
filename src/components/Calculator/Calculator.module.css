@@ -3,8 +3,7 @@
     margin-bottom: 1rem;
     width: 3rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
 }
 
 .ErrorMessage {
@@ -17,4 +16,8 @@
 .kurs {
     display: flex;
     justify-content: center;
+}
+
+.Container {
+    max-width: 20rem;
 }

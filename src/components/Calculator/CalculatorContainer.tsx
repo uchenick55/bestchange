@@ -89,8 +89,8 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой валюты
         selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение второй валюты
     },[MyPairData.FROM,MyPairData.TO])
-    const [Qty1String, setQty1String] = useState(Qty1.toString())
-    const [Qty2String, setQty2String] = useState(Qty2.toString())
+    const [Qty1String, setQty1String] = useState<string>(Qty1.toString())
+    const [Qty2String, setQty2String] = useState<string>(Qty2.toString())
 
     useEffect(()=>{
         setQty1String(Qty1.toString()) // при каждом обновлении Qty1 в сторе - обновить значение строки поля вывода 1
