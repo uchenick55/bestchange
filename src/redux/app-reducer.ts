@@ -1,5 +1,4 @@
-import {getBestChangeDataTC, getBestChangeDataTC1} from "./bestchange-reducer";
-import {Dispatch} from "redux";
+import {getBestChangeDataTC} from "./bestchange-reducer";
 import {ThunkAction} from "redux-thunk";
 import {GlobalStateType} from "./store-redux";
 

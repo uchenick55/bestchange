@@ -175,7 +175,7 @@ export const getBestChangeDataTC //санкреатор получения да�
 }
 
 export const getBestChangeDataTC1 = () => {//санкреатор получения данных из внешнего источника
-    return async (dispatch: Dispatch<ActionTypes>) => { // санка получения данных из localStorage
+    return async (dispatch: Dispatch<ActionTypes>, getState: () => GlobalStateType) => { // санка получения данных из localStorage
         const response2 = await apiCommon.getData()
         dispatch(response2)  //записать считаное из localStorage значение темы в store
     }

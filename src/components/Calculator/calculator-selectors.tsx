@@ -1,6 +1,6 @@
 import {createSelector} from "reselect";
 import {GlobalStateType} from "../../redux/store-redux";
-import {PairType, RangeType} from "../Types/commonTypes";
+import {RangeType} from "../Types/commonTypes";
 
 
 

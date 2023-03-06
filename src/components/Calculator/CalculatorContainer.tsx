@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import Container from "react-bootstrap/Container";
-import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
 import {ErrorsType, PairType, RangeType} from "../Types/commonTypes";
 import {
@@ -51,7 +50,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({
         // записать в стейт Range1 и Range2
         setQty1AC(MyPairData.MINAMOUNT)
         //задать в MINAMOUNT значение поля Qty1
-    }, [selectValue1, selectValue2])
+    }, [selectValue1, selectValue2, MyPairData.MINAMOUNT,setQty1AC, setRangesAC ])
 
     useEffect(() => {// валидация формы
         let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
@@ -80,7 +79,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({
 
         setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
 
-    }, [Qty1, Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT])
+    }, [Qty1, Qty2, MyPairData.MAXAMOUNT, MyPairData.MINAMOUNT, MyPairData.AMOUNT, setErrorsAC])
 
     const setSelectValue1 = (selectValue1: string) => { // действия при выборе валюты в первом селекте
         selectValue1AC(selectValue1) // задаем в стейте измененное значение первой пары
@@ -95,7 +94,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({
     useEffect(() => {// при каждом изменении полей FROM и TO в MyPairData
         selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой валюты
         selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение второй валюты
-    }, [MyPairData.FROM, MyPairData.TO])
+    }, [MyPairData.FROM, MyPairData.TO, selectValue1AC, selectValue2AC])
 
     useEffect(() => {
         setQty1String(Qty1.toString()) // при каждом обновлении Qty1 в сторе - обновить значение строки поля вывода 1
