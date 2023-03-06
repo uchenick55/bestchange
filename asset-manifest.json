@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/bestchange/static/css/main.570fa87c.css",
-    "main.js": "/bestchange/static/js/main.b7e77717.js",
+    "main.js": "/bestchange/static/js/main.742c6f25.js",
     "static/css/198.4e67c4ea.chunk.css": "/bestchange/static/css/198.4e67c4ea.chunk.css",
-    "static/js/198.e6731444.chunk.js": "/bestchange/static/js/198.e6731444.chunk.js",
+    "static/js/198.f1bf3901.chunk.js": "/bestchange/static/js/198.f1bf3901.chunk.js",
     "static/media/transfer-svgrepo-com.svg": "/bestchange/static/media/transfer-svgrepo-com.ca8cefb698bcc67c2c11cfcff5b71e83.svg",
     "index.html": "/bestchange/index.html",
     "main.570fa87c.css.map": "/bestchange/static/css/main.570fa87c.css.map",
-    "main.b7e77717.js.map": "/bestchange/static/js/main.b7e77717.js.map",
+    "main.742c6f25.js.map": "/bestchange/static/js/main.742c6f25.js.map",
     "198.4e67c4ea.chunk.css.map": "/bestchange/static/css/198.4e67c4ea.chunk.css.map",
-    "198.e6731444.chunk.js.map": "/bestchange/static/js/198.e6731444.chunk.js.map"
+    "198.f1bf3901.chunk.js.map": "/bestchange/static/js/198.f1bf3901.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.570fa87c.css",
-    "static/js/main.b7e77717.js"
+    "static/js/main.742c6f25.js"
   ]
 }
