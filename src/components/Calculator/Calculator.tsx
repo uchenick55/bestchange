@@ -30,12 +30,14 @@ const Calculator: React.FC<CalculatorType> = ({
 
 
     const onChangeQty1 = (e:ChangeEvent<HTMLInputElement>) => {
-        setQty1AC(Number(e.currentTarget.value))
-        setQty1String(e.currentTarget.value)
+        const eLocal:string = e.currentTarget.value
+        if (Number(eLocal)) setQty1AC(Number(eLocal))
+        setQty1String(eLocal)
     }
     const onChangeQty2 = (e:ChangeEvent<HTMLInputElement>) => {
-        setQty2AC(Number(e.currentTarget.value))
-        setQty2String(e.currentTarget.value)
+        const eLocal:string = e.currentTarget.value
+        if (Number(eLocal)) setQty2AC(Number(eLocal))
+        setQty2String(eLocal)
     }
 
     const kurs: string = MyPairData.IN > MyPairData.OUT // вывод
