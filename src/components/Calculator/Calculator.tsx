@@ -46,7 +46,7 @@ const Calculator: React.FC<CalculatorType> = ({
     ) => {
 
         const eLocal: string = e.currentTarget.value // получить значение из поля ввода
-        if (Number(eLocal)) setQtyACCommon(Number(eLocal)) // если введено число, то записать его в стор
+        if (Number(eLocal) || eLocal==="" || eLocal==="0") setQtyACCommon(Number(eLocal)) // если введено число, то записать его в стор
         setQtyStringCommon(eLocal) // записать в хук useState (Qty1String/Qty2String) текстовое значение поля ввода
         setErrorsAC(ErrorLocal2) // зануление ошибок при пустом поле текстового ввода
     }
