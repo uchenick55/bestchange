@@ -1,5 +1,5 @@
 import {api} from "../components/api/api";
-import {ErrorsType, PairType} from "../components/Types/commonTypes";
+import {ErrorsType, PairType, RangeType} from "../components/Types/commonTypes";
 import {apiCommon} from "../components/api/apiLocalStorage";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
@@ -38,8 +38,8 @@ type setMyPairDataActionType = { type: typeof SET_MY_PAIR_DATA, selectValue1: st
 export const setMyPairDataAC = (selectValue1: string, selectValue2: string): setMyPairDataActionType => { // экшн задания данных с сервера
     return {type: SET_MY_PAIR_DATA, selectValue1, selectValue2}
 };
-type setRangesActionType = { type: typeof SET_RANGES, Range1: Array<string>, Range2: Array<string> }
-export const setRangesAC = (Range1: Array<string>, Range2: Array<string>): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
+type setRangesActionType = { type: typeof SET_RANGES, Range1: RangeType, Range2: RangeType }
+export const setRangesAC = (Range1: RangeType, Range2: RangeType): setRangesActionType => { // экшн задания диапазонов выпадающих селектов
     return {type: SET_RANGES, Range1, Range2}
 };
 type setErrorsActionType = { type: typeof SET_ERRORS, Errors: ErrorsType }
@@ -58,8 +58,8 @@ type initialStateType = {
     selectValue2: string,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
-    Range1: Array<string> // диапазон значений для селекта 1
-    Range2: Array<string> // диапазон значений для селекта 2
+    Range1: RangeType // диапазон значений для селекта 1
+    Range2: RangeType // диапазон значений для селекта 2
     Errors: ErrorsType //все ошибки формы
 }
 const initialState: initialStateType = { //стейт по умолчанию

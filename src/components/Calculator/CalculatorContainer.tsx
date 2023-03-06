@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Container from "react-bootstrap/Container";
 import commonClasses from "../common/CommonClasses/common.module.css";
 import {connect} from "react-redux";
-import {ErrorsType, PairType} from "../Types/commonTypes";
+import {ErrorsType, PairType, RangeType} from "../Types/commonTypes";
 import {
     selectValue1AC,
     selectValue2AC, setErrorsAC,
@@ -22,15 +22,15 @@ export type CalculatorType = {
     selectValue2: string,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: number,// значение поля валюты 2 - при его вводе вычисляется Qty1
-    Range1: Array<string> // диапазон значений для селекта 1
-    Range2: Array<string> // диапазон значений для селекта 2
+    Range1: RangeType // диапазон значений для селекта 1
+    Range2: RangeType // диапазон значений для селекта 2
     Errors: ErrorsType //все ошибки формы
     selectValue1AC: (selectValue1: string) => void,// задание значения из первого списка валют
     selectValue2AC: (selectValue2: string) => void,// задание значения из второго списка валют
     setQty1AC: (Qty1: number) => void,// задание значения из первого поля ввода
     setQty2AC: (Qty2: number) => void, // задание значения из второго поля ввода
     setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
-    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void, // задание диапазонов валют для выбора
+    setRangesAC: (Range1: RangeType, Range2: RangeType) => void, // задание диапазонов валют для выбора
     setErrorsAC: (Errors: ErrorsType)=> void // задание ошибок формы
    // reverseCurrency: () => void  // инвертируем пару по нажатию кнопки
 
@@ -125,8 +125,8 @@ type mapStateToPropsType = {
     selectValue2: string,// значение селекта 2 (валюты 2) (на его основе фильтруется bestChangeData и получаем MyPairData)
     Qty1: number, // значение поля валюты 1 - при его вводе вычисляется Qty2
     Qty2: number, // значение поля валюты 2 - при его вводе вычисляется Qty1
-    Range1: Array<string>, // диапазон валют для первого селекта
-    Range2: Array<string>, // диапазон валют для второго селекта
+    Range1: RangeType, // диапазон валют для первого селекта
+    Range2: RangeType, // диапазон валют для второго селекта
     Errors:ErrorsType,// все ошибки формы
 }
 
@@ -136,7 +136,7 @@ type mapDispatchToPropsType = {
     setQty1AC:(Qty1: number) => void
     setQty2AC:(Qty2: number) => void
     setMyPairDataAC:(selectValue1: string, selectValue2: string) => void
-    setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void
+    setRangesAC: (Range1: RangeType, Range2: RangeType) => void
     setErrorsAC:( Errors: ErrorsType) => void
 }
 

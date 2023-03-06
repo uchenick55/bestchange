@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {Container, Form} from "react-bootstrap";
-import {ErrorsType, PairType} from "../Types/commonTypes";
+import {ErrorsType, PairType, RangeType} from "../Types/commonTypes";
 import reversePic from "../common/assets/swg/transfer-svgrepo-com.svg"
 import classes from "./Calculator.module.css"
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -18,8 +18,8 @@ type CalculatorType = {
     setSelectValue1: (selectValue1: string) => void,
     setSelectValue2: (selectValue2: string) => void,
     MyPairData: PairType
-    Range1: Array<string> // диапазон значений для селекта 1
-    Range2: Array<string> // диапазон значений для селекта 2
+    Range1: RangeType // диапазон значений для селекта 1
+    Range2: RangeType // диапазон значений для селекта 2
     Qty1String: string // строковый ввод количества первой валюты
     setQty1String: (Qty1String: string) => void // изменение количества первой валюты в виде строки
     Qty2String: string// строковый ввод количества второрой валюты
@@ -74,10 +74,10 @@ const Calculator: React.FC<CalculatorType> = ({
         <div
             className={classes.ErrorMessage}>{Errors.ErrorInput1} {/*ошибки первого поля ввода количества валюты*/}</div>
 
-
-        <img onClick={() => {
-            reverseCurrency()
-        }} className={classes.reverseImg} src={reversePic} alt="Поменять валюты местами"/>
+        <div className='d-flex justify-content-center align-items-center'>
+            <img onClick={() => { reverseCurrency()}} className={classes.reverseImg} src={reversePic}
+                 alt="Поменять местами" title="Поменять местами"/>
+        </div>
 
 
         <Form.Select className="my-2" value={selectValue2} onChange={(e) => {// выпадающий список выбора второй валюты
