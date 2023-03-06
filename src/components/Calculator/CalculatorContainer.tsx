@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import Container from "react-bootstrap/Container";
 import commonClasses from "../common/CommonClasses/common.module.css";
@@ -32,6 +32,7 @@ export type CalculatorType = {
     setMyPairDataAC:(selectValue1: string, selectValue2:string) => void, // задание данных для новой пары
     setRangesAC: (Range1: Array<string>, Range2: Array<string>) => void, // задание диапазонов валют для выбора
     setErrorsAC: (Errors: ErrorsType)=> void // задание ошибок формы
+   // reverseCurrency: () => void  // инвертируем пару по нажатию кнопки
 
 }
 const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectValue1,
@@ -88,6 +89,14 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
         selectValue1AC(MyPairData.FROM) // задаем в стейте измененное значение первой валюты
         selectValue2AC(MyPairData.TO) // задаем в стейте измененное значение второй валюты
     },[MyPairData.FROM,MyPairData.TO])
+    const [Qty1String, setQty1String] = useState(Qty1.toString())
+    const [Qty2String, setQty2String] = useState(Qty2.toString())
+
+    useEffect(()=>{
+        setQty1String(Qty1.toString()) // при каждом обновлении Qty1 в сторе - обновить значение строки поля вывода 1
+        setQty2String(Qty2.toString()) // при каждом обновлении Qty2 в сторе - обновить значение строки поля вывода 2
+    },[setQty1String, Qty1, setQty2String, Qty2])
+
 
     const reverseCurrency = () => { // инвертируем пару по нажатию кнопки
         setMyPairDataAC(selectValue2,selectValue1)
@@ -96,13 +105,13 @@ const CalculatorContainer: React.FC<CalculatorType> = ({   MyPairData, selectVal
     const home = <div>
         <Container>
             <h2 className={commonClasses.pageHeader}>Калькулятор</h2>
-          {/*  <CalculatorFormik MyPairData={MyPairData}/>*/}
           <div><button onClick={()=>{reverseCurrency()}}>Поменять валюты местами</button></div>
             <Calculator
                 selectValue1={selectValue1} selectValue2={selectValue2} Qty1={Qty1} Qty2={Qty2}
                 setQty1AC={setQty1AC} setQty2AC={setQty2AC} setSelectValue1={setSelectValue1}
                 setSelectValue2={setSelectValue2} MyPairData={MyPairData} Range1={Range1} Range2={Range2}
-                Errors={Errors}
+                Errors={Errors} Qty1String={Qty1String} setQty1String={setQty1String}
+                Qty2String={Qty2String} setQty2String={setQty2String}
             />
         </Container>
     </div>
