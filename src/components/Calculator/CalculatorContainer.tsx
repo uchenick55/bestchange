@@ -43,7 +43,7 @@ const CalculatorContainer: React.FC<CalculatorType> = ({
                                                            Errors, setErrorsAC
                                                        }) => {
 
-    let [Qty1String, setQty1String] = useState<string>(Qty1.toString())
+    const [Qty1String, setQty1String] = useState<string>(Qty1.toString())
     const [Qty2String, setQty2String] = useState<string>(Qty2.toString())
 
     useEffect(() => {//при изменении пары валют записываем диапазоны валют в стейт

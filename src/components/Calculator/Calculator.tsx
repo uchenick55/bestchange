@@ -27,6 +27,7 @@ type CalculatorType = {
     reverseCurrency: () => void // функция смены валют
     setErrorsAC: (Errors: ErrorsType) => void // задание ошибок формы
 }
+
 const Calculator: React.FC<CalculatorType> = ({
                                                   selectValue1, selectValue2, Qty1, Qty2,
                                                   setQty1AC, setQty2AC, setSelectValue1,
@@ -35,25 +36,34 @@ const Calculator: React.FC<CalculatorType> = ({
                                                   Qty2String, setQty2String, reverseCurrency, setErrorsAC
                                               }) => {
 
+    const ErrorLocal:ErrorsType = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
+
+    const onChangeQtyCommon = (
+        e: ChangeEvent<HTMLInputElement>, // тип события смены поля
+        setQtyACCommon:(QtyCommon: number) => void, // запись количества валюты в виде цифр
+        setQtyStringCommon:(QtyStringCommon: string) => void,// запись количества валюты в виде строки
+        ErrorLocal2: ErrorsType // объект с обновленными ошибками
+    ) => {
+
+        const eLocal: string = e.currentTarget.value // получить значение из поля ввода
+        if (Number(eLocal)) setQtyACCommon(Number(eLocal)) // если введено число, то записать его в стор
+        setQtyStringCommon(eLocal) // записать в хук useState (Qty1String/Qty2String) текстовое значение поля ввода
+        setErrorsAC(ErrorLocal2) // зануление ошибок при пустом поле текстового ввода
+    }
+
 
     const onChangeQty1 = (e: ChangeEvent<HTMLInputElement>) => {
-        const eLocal: string = e.currentTarget.value
-        if (Number(eLocal)) setQty1AC(Number(eLocal))
-        setQty1String(eLocal)
-        // зануление ошибок при пустом поле текстового ввода
-        let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
         ErrorLocal.ErrorInput1 = ``
-        setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
+        onChangeQtyCommon(
+            e, setQty1AC, setQty1String, ErrorLocal
+        )
     }
-    const onChangeQty2 = (e: ChangeEvent<HTMLInputElement>) => {
-        const eLocal: string = e.currentTarget.value
-        if (Number(eLocal)) setQty2AC(Number(eLocal))
-        setQty2String(eLocal)
-        // зануление ошибок при пустом поле текстового ввода
-        let ErrorLocal = Object.assign({}, Errors); // поверхностно копируем весь объект ошибок
-        ErrorLocal.ErrorInput2 = ``
-        setErrorsAC(ErrorLocal) // запись в стейт обновленного объекта с ошибками
 
+    const onChangeQty2 = (e: ChangeEvent<HTMLInputElement>) => {
+        ErrorLocal.ErrorInput2 = ``
+        onChangeQtyCommon(
+            e, setQty2AC, setQty2String, ErrorLocal
+        )
     }
 
     const kurs: string = MyPairData.IN > MyPairData.OUT // вывод
