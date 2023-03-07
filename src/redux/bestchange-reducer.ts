@@ -1,6 +1,6 @@
 import {api} from "../components/api/api";
 import {ErrorsType, PairType, RangeType} from "../components/Types/commonTypes";
-import {apiCommon} from "../components/api/apiLocalStorage";
+import {apiCommon} from "../components/api/_apiLocalStorage";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {GlobalStateType} from "./store-redux";

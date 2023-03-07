@@ -6,7 +6,6 @@ import classes from "./Calculator.module.css"
 import InputGroup from 'react-bootstrap/InputGroup';
 import commonClasses from "../common/CommonClasses/common.module.css";
 
-
 type CalculatorType = {
     selectValue1: string
     selectValue2: string

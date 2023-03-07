@@ -6,7 +6,7 @@ type myResultType = {
     }
 }
 
-export const EditDataFromServer = (response: responseType) => {
+export const _editDataFromServer = (response: responseType) => {
     const convert = require("xml-js"); // преобразуем в json
     const data: myResultType = JSON.parse(
         convert.xml2json(response.data, {compact: true, spaces: 2})
